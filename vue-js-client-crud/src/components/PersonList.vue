@@ -35,7 +35,13 @@
           <label><strong>Title:</strong></label> {{ currentPerson.title }}
         </div>
         <div>
-          <label><strong>Description:</strong></label> {{ currentPerson.description }}
+          <label><strong>Sex:</strong></label> {{ currentPerson.sex }}
+        </div>
+        <div>
+          <label><strong>First Name:</strong></label> {{ currentPerson.firstname }}
+        </div>
+        <div>
+          <label><strong>Last Name:</strong></label> {{ currentPerson.lastname }}
         </div>
         <div>
           <label><strong>Status:</strong></label> {{ currentPerson.published ? 'Published' : 'Pending' }}

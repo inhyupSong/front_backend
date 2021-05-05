@@ -15,7 +15,10 @@ exports.create = (req, res) => {
   // Create a Person
   const person = {
     title: req.body.title,
-    description: req.body.description,
+    sex: req.body.sex,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+
     published: req.body.published ? req.body.published : false,
   };
 

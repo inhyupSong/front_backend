@@ -3,13 +3,50 @@
     <div v-if="!submitted">
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" required v-model="person.title" name="title" />
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          required
+          v-model="person.title"
+          name="title"
+        />
       </div>
 
       <div class="form-group">
-        <label for="description">Description</label>
-        <input class="form-control" id="description" required v-model="person.description" name="description" />
+        <label for="sex">Sex</label>
+        <input
+          class="form-control"
+          id="sex"
+          required
+          v-model="person.sex"
+          name="sex"
+        />
       </div>
+
+      <div class="form-group">
+        <label for="firstname">firstname</label>
+        <input
+          class="form-control"
+          id="firstname"
+          required
+          v-model="person.firstname"
+          name="firstname"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="lastname">lastname</label>
+        <input
+          class="form-control"
+          id="lastname"
+          required
+          v-model="person.lastname"
+          name="lastname"
+        />
+      </div>
+
+
 
       <button @click="savePerson" class="btn btn-success">Submit</button>
     </div>
@@ -28,10 +65,13 @@ export default {
   name: 'add-person',
   data() {
     return {
+      /* here to change */
       person: {
         id: null,
         title: '',
-        description: '',
+        sex: '',
+        firstname: '',
+        lastname: '',
         published: false,
       },
       submitted: false,
@@ -41,7 +81,9 @@ export default {
     savePerson() {
       var data = {
         title: this.person.title,
-        description: this.person.description,
+        sex: this.person.sex,
+        firstname: this.person.firstname,
+        lastname: this.person.lastname,
       };
 
       PersonDataService.create(data)

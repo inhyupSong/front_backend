@@ -3,7 +3,13 @@ module.exports = (sequelize, Sequelize) => {
     title: {
       type: Sequelize.STRING,
     },
-    description: {
+    sex: {
+      type: Sequelize.STRING,
+    },
+    firstname: {
+      type: Sequelize.STRING,
+    },
+    lastname: {
       type: Sequelize.STRING,
     },
     published: {

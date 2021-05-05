@@ -7,8 +7,16 @@
         <input type="text" class="form-control" id="title" v-model="currentPerson.title" />
       </div>
       <div class="form-group">
-        <label for="description">Description</label>
-        <input type="text" class="form-control" id="description" v-model="currentPerson.description" />
+        <label for="sex">Sex</label>
+        <input type="text" class="form-control" id="sex" v-model="currentPerson.sex" />
+      </div>
+      <div class="form-group">
+        <label for="firstname">First name</label>
+        <input type="text" class="form-control" id="firstname" v-model="currentPerson.firstname" />
+      </div>
+      <div class="form-group">
+        <label for="lastname">Last name</label>
+        <input type="text" class="form-control" id="lastname" v-model="currentPerson.lastname" />
       </div>
 
       <div class="form-group">
