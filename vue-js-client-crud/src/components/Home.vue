@@ -96,7 +96,7 @@ export default {
       PersonDataService.delete(this.currentPerson.id)
         .then(response => {
           console.log(response.data);
-          this.$router.push({ name: 'persons' });
+          this.$router.push({ name: 'people' });
         })
         .catch(e => {
           console.log(e);

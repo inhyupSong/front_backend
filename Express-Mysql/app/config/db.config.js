@@ -3,6 +3,7 @@ module.exports = {
   USER: 'root',
   PASSWORD: 'Isong123',
   DB: 'bint',
+  Table: 'people',
   dialect: 'mysql',
   pool: {
     max: 5,

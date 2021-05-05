@@ -11,12 +11,12 @@
       </div>
     </div>
     <div class="col-md-6">
-      <h4>Persons List</h4>
+      <h4>People List</h4>
       <ul class="list-group">
         <li
           class="list-group-item"
           :class="{ active: index == currentIndex }"
-          v-for="(person, index) in persons"
+          v-for="(person, index) in people"
           :key="index"
           @click="setActivePerson(person, index)"
         >
@@ -24,7 +24,7 @@
         </li>
       </ul>
 
-      <button class="m-3 btn btn-sm btn-danger" @click="removeAllPersons">
+      <button class="m-3 btn btn-sm btn-danger" @click="removeAllPeople">
         Remove All
       </button>
     </div>
@@ -41,7 +41,7 @@
           <label><strong>Status:</strong></label> {{ currentPerson.published ? 'Published' : 'Pending' }}
         </div>
 
-        <a class="badge badge-warning" :href="'/persons/' + currentPerson.id">
+        <a class="badge badge-warning" :href="'/people/' + currentPerson.id">
           Edit
         </a>
       </div>
@@ -57,20 +57,20 @@
 import PersonDataService from '../services/PersonDataService';
 
 export default {
-  name: 'persons-list',
+  name: 'people-list',
   data() {
     return {
-      persons: [],
+      people: [],
       currentPerson: null,
       currentIndex: -1,
       title: '',
     };
   },
   methods: {
-    retrievePersons() {
+    retrievePeople() {
       PersonDataService.getAll()
         .then(response => {
-          this.persons = response.data;
+          this.people = response.data;
           console.log(response.data);
         })
         .catch(e => {
@@ -79,7 +79,7 @@ export default {
     },
 
     refreshList() {
-      this.retrievePersons();
+      this.retrievePeople();
       this.currentPerson = null;
       this.currentIndex = -1;
     },
@@ -89,7 +89,7 @@ export default {
       this.currentIndex = index;
     },
 
-    removeAllPersons() {
+    removeAllPeople() {
       PersonDataService.deleteAll()
         .then(response => {
           console.log(response.data);
@@ -103,7 +103,7 @@ export default {
     searchTitle() {
       PersonDataService.findByTitle(this.title)
         .then(response => {
-          this.persons = response.data;
+          this.people = response.data;
           console.log(response.data);
         })
         .catch(e => {
@@ -112,7 +112,7 @@ export default {
     },
   },
   mounted() {
-    this.retrievePersons();
+    this.retrievePeople();
   },
 };
 </script>

@@ -8,12 +8,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      alias: '/persons',
-      name: 'persons',
+      alias: '/people',
+      name: 'people',
       component: () => import('./components/PersonList'),
     },
     {
-      path: '/persons/:id',
+      path: '/people/:id',
       name: 'person-details',
       component: () => import('./components/Home'),
     },

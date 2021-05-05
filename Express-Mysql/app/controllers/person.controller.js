@@ -1,5 +1,5 @@
 const db = require('../models');
-const Person = db.persons;
+const Person = db.people;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Person
@@ -31,7 +31,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Persons from the database.
+// Retrieve all People from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving persons.',
+        message: err.message || 'Some error occurred while retrieving people.',
       });
     });
 };
@@ -112,23 +112,23 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all Persons from the database.
+// Delete all People from the database.
 exports.deleteAll = (req, res) => {
   Person.destroy({
     where: {},
     truncate: false,
   })
     .then(nums => {
-      res.send({ message: `${nums} Persons were deleted successfully!` });
+      res.send({ message: `${nums} People were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message || 'Some error occurred while removing all persons.',
+        message: err.message || 'Some error occurred while removing all people.',
       });
     });
 };
 
-// Find all published Persons
+// Find all published People
 exports.findAllPublished = (req, res) => {
   Person.findAll({ where: { published: true } })
     .then(data => {
@@ -136,7 +136,7 @@ exports.findAllPublished = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving persons.',
+        message: err.message || 'Some error occurred while retrieving people.',
       });
     });
 };
