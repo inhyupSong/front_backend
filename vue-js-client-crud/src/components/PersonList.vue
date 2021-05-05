@@ -43,6 +43,44 @@
         <div>
           <label><strong>Last Name:</strong></label> {{ currentPerson.lastname }}
         </div>
+
+
+        <div>
+          <label><strong>Street:</strong></label> {{ currentPerson.street }}
+        </div>
+        <div>
+          <label><strong>House Nr.:</strong></label> {{ currentPerson.house_nr }}
+        </div>
+        <div>
+          <label><strong>Region:</strong></label> {{ currentPerson.region }}
+        </div>
+        <div>
+          <label><strong>Post Nr.:</strong></label> {{ currentPerson.post_nr }}
+        </div>
+
+
+        <div>
+          <label><strong>State:</strong></label> {{ currentPerson.state }}
+        </div>
+        <div>
+          <label><strong>Country:</strong></label> {{ currentPerson.country }}
+        </div>
+        <div>
+          <label><strong>email:</strong></label> {{ currentPerson.email }}
+        </div>
+        <div>
+          <label><strong>Phone Nr.:</strong></label> {{ currentPerson.phone_nr }}
+        </div>
+
+
+        <div>
+          <label><strong>Mobile Nr.:</strong></label> {{ currentPerson.mobile_nr }}
+        </div>
+        <div>
+          <label><strong>Extra infos:</strong></label> {{ currentPerson.extra_infos }}
+        </div>
+
+
         <div>
           <label><strong>Status:</strong></label> {{ currentPerson.published ? 'Published' : 'Pending' }}
         </div>

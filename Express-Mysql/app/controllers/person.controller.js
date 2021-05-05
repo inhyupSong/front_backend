@@ -18,6 +18,16 @@ exports.create = (req, res) => {
     sex: req.body.sex,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
+    street: req.body.street,
+    house_nr: req.body.house_nr,
+    region: req.body.region,
+    Post_nr: req.body.Post_nr,
+    state: req.body.state,
+    country: req.body.country,
+    email: req.body.email,
+    phone_nr: req.body.phone_nr,
+    mobile_nr: req.body.mobile_nr,
+    extra_infos: req.body.extra_infos,
 
     published: req.body.published ? req.body.published : false,
   };
