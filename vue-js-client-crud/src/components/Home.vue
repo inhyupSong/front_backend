@@ -1,83 +1,42 @@
 <template>
-  <div v-if="currentPerson" class="edit-form">
-    <h4>Person</h4>
+  <div v-if="currentBook" class="edit-form">
+    <h4>Book</h4>
     <form>
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" v-model="currentPerson.title" />
-      </div>
-      <div class="form-group">
-        <label for="sex">Sex</label>
-        <input type="text" class="form-control" id="sex" v-model="currentPerson.sex" />
-      </div>
-      <div class="form-group">
-        <label for="firstname">First name</label>
-        <input type="text" class="form-control" id="firstname" v-model="currentPerson.firstname" />
-      </div>
-      <div class="form-group">
-        <label for="lastname">Last name</label>
-        <input type="text" class="form-control" id="lastname" v-model="currentPerson.lastname" />
-      </div>
-      <div class="form-group">
-        <label for="street">street</label>
-        <input type="text" class="form-control" id="street" v-model="currentPerson.street" />
-      </div>
-      <div class="form-group">
-        <label for="house_nr">house_nr</label>
-        <input type="text" class="form-control" id="house_nr" v-model="currentPerson.house_nr" />
-      </div>
-      <div class="form-group">
-        <label for="region">region</label>
-        <input type="text" class="form-control" id="region" v-model="currentPerson.region" />
-      </div>
-      <div class="form-group">
-        <label for="Post_nr">Post_nr</label>
-        <input type="text" class="form-control" id="Post_nr" v-model="currentPerson.Post_nr" />
-      </div>
-      <div class="form-group">
-        <label for="state">state</label>
-        <input type="text" class="form-control" id="state" v-model="currentPerson.state" />
-      </div>
-      <div class="form-group">
-        <label for="country">country</label>
-        <input type="text" class="form-control" id="country" v-model="currentPerson.country" />
-      </div>
-      <div class="form-group">
-        <label for="email">email</label>
-        <input type="text" class="form-control" id="email" v-model="currentPerson.email" />
-      </div>
-      <div class="form-group">
-        <label for="phone_nr">phone_nr</label>
-        <input type="text" class="form-control" id="phone_nr" v-model="currentPerson.phone_nr" />
-      </div>
-      <div class="form-group">
-        <label for="mobile_nr">mobile_nr</label>
-        <input type="text" class="form-control" id="mobile_nr" v-model="currentPerson.mobile_nr" />
-      </div>
-      <div class="form-group">
-        <label for="extra_infos">extra_infos</label>
-        <input type="text" class="form-control" id="extra_infos" v-model="currentPerson.extra_infos" />
-      </div>
-      
-
-      <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentPerson.published ? 'Published' : 'Pending' }}
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          v-model="currentBook.title"
+        />
+        <div class="form-group">
+          <label><strong>Status:</strong></label>
+          {{ currentBook.published ? "Published" : "Pending" }}
+        </div>
       </div>
     </form>
 
-    <button class="badge badge-primary mr-2" v-if="currentPerson.published" @click="updatePublished(false)">
+    <button
+      class="badge badge-primary mr-2"
+      v-if="currentBook.published"
+      @click="updatePublished(false)"
+    >
       UnPublish
     </button>
-    <button v-else class="badge badge-primary mr-2" @click="updatePublished(true)">
+    <button
+      v-else
+      class="badge badge-primary mr-2"
+      @click="updatePublished(true)"
+    >
       Publish
     </button>
 
-    <button class="badge badge-danger mr-2" @click="deletePerson">
+    <button class="badge badge-danger mr-2" @click="deleteBook">
       Delete
     </button>
 
-    <button type="submit" class="badge badge-success" @click="updatePerson">
+    <button type="submit" class="badge badge-success" @click="updateBook">
       Update
     </button>
     <p>{{ message }}</p>
@@ -85,26 +44,26 @@
 
   <div v-else>
     <br />
-    <p>Please click on a Person...</p>
+    <p>Please click on a Book...</p>
   </div>
 </template>
 
 <script>
-import PersonDataService from '../services/PersonDataService';
+import BookDataService from '../services/BookDataService';
 
 export default {
-  name: 'person',
+  name: 'book',
   data() {
     return {
-      currentPerson: null,
+      currentBook: null,
       message: '',
     };
   },
   methods: {
-    getPerson(id) {
-      PersonDataService.get(id)
+    getBook(id) {
+      BookDataService.get(id)
         .then(response => {
-          this.currentPerson = response.data;
+          this.currentBook = response.data;
           console.log(response.data);
         })
         .catch(e => {
@@ -114,15 +73,15 @@ export default {
 
     updatePublished(status) {
       var data = {
-        id: this.currentPerson.id,
-        title: this.currentPerson.title,
-        description: this.currentPerson.description,
-        published: status,
+        id: this.currentBook.id,
+        title: this.currentBook.title,
+        description: this.currentBook.description,
+        published: status
       };
 
-      PersonDataService.update(this.currentPerson.id, data)
+      BookDataService.update(this.currentBook.id, data)
         .then(response => {
-          this.currentPerson.published = status;
+          this.currentBook.published = status;
           console.log(response.data);
         })
         .catch(e => {
@@ -130,32 +89,34 @@ export default {
         });
     },
 
-    updatePerson() {
-      PersonDataService.update(this.currentPerson.id, this.currentPerson)
+    updateBook() {
+      BookDataService.update(this.currentBook.id, this.currentBook)
         .then(response => {
           console.log(response.data);
-          this.message = 'The person was updated successfully!';
+          this.message = 'The book was updated successfully!';
         })
         .catch(e => {
           console.log(e);
         });
     },
 
-    deletePerson() {
-      PersonDataService.delete(this.currentPerson.id)
+    deleteBook() {
+      BookDataService.delete(this.currentBook.id)
         .then(response => {
           console.log(response.data);
-          this.$router.push({ name: 'people' });
+          this.$router.push({ name: "books" });
         })
         .catch(e => {
           console.log(e);
         });
     },
-  },
-  mounted() {
-    this.message = '';
-    this.getPerson(this.$route.params.id);
-  },
+
+
+    mounted() {
+      this.message = '';
+      this.getBook(this.$route.params.id);
+    },
+  }
 };
 </script>
 
