@@ -97,7 +97,7 @@ export default {
           console.log(e);
         });
     },
-ABC
+ABC DEF
     refreshList() {
       this.retrieveBooks();
       this.currentBook = null;
