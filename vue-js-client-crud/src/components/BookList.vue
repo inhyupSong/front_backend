@@ -31,7 +31,13 @@
         >
           <div>
             <tr>
-              <td>{{jsonObject.title}}</td>
+              <td>{{ jsonObject.jItem_1 }}</td>
+            </tr>
+            <tr>
+              <td>{{ jsonObject.jItem_2 }}</td>
+            </tr>
+            <tr>
+              <td>{{ jsonObject.jItem_3 }}</td>
             </tr>
             <!-- <tr>
               <td>{{ book.title }}</td>
@@ -83,9 +89,9 @@ export default {
     return {
       jsonObjects: [],
     };
-  }, 
-  methods: {
+  },
 
+  methods: {
     /* JSON GET */
     retrieveBooks() {
       BookDataService.getAll()
@@ -103,6 +109,7 @@ export default {
       this.currentBook = null;
       this.currentIndex = -1;
     },
+
     searchTitle() {
       BookDataService.findByTitle(this.title)
         .then(response => {
@@ -115,11 +122,22 @@ export default {
     },
   },
 
-    /* Calling  */
-   mounted() {
-    this.retrieveBooks();
-  }, 
-};
+  /* Calling  */
+  mounted() {
+    BookDataService.getAll()
+      .then(response => {
+        this.jsonObjects = response.data.books.map((book) => {
+          return {
+            jItem_1: book.title,
+            jItem_2: book.author,
+            jItem_3: book.abstract,
+          };
+        });
+        //console.log(this.jsonObjects);
+      })
+  }
+}
+
 </script>
 
 <style>
