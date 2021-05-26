@@ -25,12 +25,15 @@
         <li
           class="list-group-item"
           :class="{ active: index == currentIndex }"
-          v-for="(book, index) in books"
+          v-for="(jsonObject, index) in jsonObjects"
           :key="index"
-          @click="setActiveBook(book, index)"
+          @click="setActiveBook(jsonObject, index)"
         >
           <div>
             <tr>
+              <td>{{jsonObject.title}}</td>
+            </tr>
+            <!-- <tr>
               <td>{{ book.title }}</td>
             </tr>
             <tr>
@@ -43,8 +46,8 @@
               <td>{{ book.length }}</td>
             </tr>
             <tr>
-              <td>{{ book.rating }}</td>
-            </tr>
+              <td>{{ book.rating }}</td> 
+            </tr>-->
           </div>
         </li>
       </ul>
@@ -75,29 +78,26 @@
 import BookDataService from '../services/BookDataService';
 
 export default {
-  name: 'books-list',
+  name: 'bookList',
   data() {
     return {
-      books: [],
-      currentBook: null,
-      currentIndex: -1,
-      title: '',
+      jsonObjects: [],
     };
-  },
+  }, 
   methods: {
+
+    /* JSON GET */
     retrieveBooks() {
       BookDataService.getAll()
-        //BookDataService.fuck()
         .then(response => {
-          this.books = response.data.books;
-
-          console.log(response.data);
+          this.jsonObjects = response.data.books;
+          //console.log(response.data);
         })
         .catch(e => {
           console.log(e);
         });
     },
-ABC DEF
+
     refreshList() {
       this.retrieveBooks();
       this.currentBook = null;
@@ -114,9 +114,11 @@ ABC DEF
         });
     },
   },
-  mounted() {
+
+    /* Calling  */
+   mounted() {
     this.retrieveBooks();
-  },
+  }, 
 };
 </script>
 

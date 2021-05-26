@@ -1,0 +1,19 @@
+/* config file
+
+
+url: http://server/people
+
+attributes (name:type):
+    title: text
+    sex: text
+    firstname: text
+
+
+
+code beispiel
+
+for attribute in config.attributes:
+   <div class="form-group">
+        <label for="attribute.name">attribute.name</label>
+        <input type="attribute.type" class="form-control" id="house_nr" v-model="currentPerson.house_nr" />
+      </div> */

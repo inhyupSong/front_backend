@@ -1,5 +1,6 @@
-<template>
-  <div v-if="currentBook" class="edit-form">
+  
+ <template>
+<div v-if="currentBook" class="edit-form">
     <h4>Book</h4>
     <form>
       <div class="form-group">
@@ -45,7 +46,7 @@
   <div v-else>
     <br />
     <p>Please click on a Book...</p>
-  </div>
+  </div> 
 </template>
 
 <script>
@@ -111,18 +112,11 @@ export default {
         });
     },
 
-
-    mounted() {
+   mounted() {
       this.message = '';
       this.getBook(this.$route.params.id);
-    },
+    }, 
   }
-};
+}; 
 </script>
 
-<style>
-.edit-form {
-  max-width: 300px;
-  margin: auto;
-}
-</style>
