@@ -31,11 +31,20 @@
         >
           <div>
             <tr>
-            <td>{{ book.title }} </td>
+              <td>{{ book.title }}</td>
             </tr>
             <tr>
-            <td>{{ book.author }} </td>
-             </tr>
+              <td>{{ book.author }}</td>
+            </tr>
+            <tr>
+              <td>{{ book.abstract }}</td>
+            </tr>
+            <tr>
+              <td>{{ book.length }}</td>
+            </tr>
+            <tr>
+              <td>{{ book.rating }}</td>
+            </tr>
           </div>
         </li>
       </ul>
@@ -88,7 +97,7 @@ export default {
           console.log(e);
         });
     },
-
+ABC
     refreshList() {
       this.retrieveBooks();
       this.currentBook = null;
