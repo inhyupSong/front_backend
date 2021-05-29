@@ -19,10 +19,6 @@ export default new Router({
         component: () => import('./components/Home'),
     },
 
-
-
-
-
     /* {
       path: '/books/:id',
       name: 'book-details',
