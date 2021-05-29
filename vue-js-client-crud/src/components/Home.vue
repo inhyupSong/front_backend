@@ -1,35 +1,21 @@
-  
- <template>
-<div v-if="currentBook" class="edit-form">
+<template>
+  <div v-if="currentBook" class="edit-form">
     <h4>Book</h4>
     <form>
       <div class="form-group">
         <label for="title">Title</label>
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          v-model="currentBook.title"
-        />
+        <input type="text" class="form-control" id="title" v-model="currentBook.title" />
         <div class="form-group">
           <label><strong>Status:</strong></label>
-          {{ currentBook.published ? "Published" : "Pending" }}
+          {{ currentBook.published ? 'Published' : 'Pending' }}
         </div>
       </div>
     </form>
 
-    <button
-      class="badge badge-primary mr-2"
-      v-if="currentBook.published"
-      @click="updatePublished(false)"
-    >
+    <button class="badge badge-primary mr-2" v-if="currentBook.published" @click="updatePublished(false)">
       UnPublish
     </button>
-    <button
-      v-else
-      class="badge badge-primary mr-2"
-      @click="updatePublished(true)"
-    >
+    <button v-else class="badge badge-primary mr-2" @click="updatePublished(true)">
       Publish
     </button>
 
@@ -46,11 +32,11 @@
   <div v-else>
     <br />
     <p>Please click on a Book...</p>
-  </div> 
+  </div>
 </template>
 
 <script>
-import BookDataService from '../services/BookDataService';
+import GenericRESTDataService from '../services/GenericRESTDataService';
 
 export default {
   name: 'book',
@@ -62,7 +48,7 @@ export default {
   },
   methods: {
     getBook(id) {
-      BookDataService.get(id)
+      GenericRESTDataService.get(id)
         .then(response => {
           this.currentBook = response.data;
           console.log(response.data);
@@ -77,10 +63,10 @@ export default {
         id: this.currentBook.id,
         title: this.currentBook.title,
         description: this.currentBook.description,
-        published: status
+        published: status,
       };
 
-      BookDataService.update(this.currentBook.id, data)
+      GenericRESTDataService.update(this.currentBook.id, data)
         .then(response => {
           this.currentBook.published = status;
           console.log(response.data);
@@ -91,7 +77,7 @@ export default {
     },
 
     updateBook() {
-      BookDataService.update(this.currentBook.id, this.currentBook)
+      GenericRESTDataService.update(this.currentBook.id, this.currentBook)
         .then(response => {
           console.log(response.data);
           this.message = 'The book was updated successfully!';
@@ -102,21 +88,20 @@ export default {
     },
 
     deleteBook() {
-      BookDataService.delete(this.currentBook.id)
+      GenericRESTDataService.delete(this.currentBook.id)
         .then(response => {
           console.log(response.data);
-          this.$router.push({ name: "books" });
+          this.$router.push({ name: 'books' });
         })
         .catch(e => {
           console.log(e);
         });
     },
 
-   mounted() {
+    mounted() {
       this.message = '';
       this.getBook(this.$route.params.id);
-    }, 
-  }
-}; 
+    },
+  },
+};
 </script>
-

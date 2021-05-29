@@ -1,4 +1,4 @@
- <template>
+<template>
   <div class="submit-form">
     <header>
       <h1>Add Book</h1>
@@ -15,24 +15,17 @@
                     <label for="title">Title</label>
                   </td>
                   <td>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="title"
-                      required
-                      v-model="book.title"
-                      name="title"
-                    />
-                  </td><br /><br />
+                    <input type="text" class="form-control" id="title" required v-model="book.title" name="title" />
+                  </td>
+                  <br /><br />
                 </tr>
-
               </table>
             </div>
           </div>
         </form>
         <br /><br />
         <div id="submit-button">
-        <button @click="saveBook" class="btn btn-success">Submit</button>
+          <button @click="saveBook" class="btn btn-success">Submit</button>
         </div>
       </div>
 
@@ -44,7 +37,7 @@
   </div>
 </template>
 <script>
-import BookDataService from '../services/BookDataService';
+import BookDataService from '../services/GenericRESTDataService';
 
 export default {
   name: 'add-book',
@@ -53,8 +46,6 @@ export default {
       book: {
         id: null,
         title: '',
-
-
         published: false,
       },
       submitted: false,
@@ -91,12 +82,12 @@ export default {
   margin: auto;
 }
 
-.field-table{
+.field-table {
   margin-top: 3rem;
   margin-left: 10rem;
 }
 
-#submit-button{
+#submit-button {
   margin-right: 160px;
 }
 </style>
