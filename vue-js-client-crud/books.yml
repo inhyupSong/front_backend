@@ -1,0 +1,17 @@
+URI: http://localhost:5001
+RessourceName: books
+
+attrbiutes:
+  title: text
+  author: text
+  abstract: long
+  length: int 
+  rating: float
+
+
+
+  /// example
+  config.URI
+  config.RessourceName
+
+  config.attributes[0]
