@@ -4,24 +4,35 @@
     <form>
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" v-model="currentBook.title" />
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          v-model="currentBook.title"
+        />
         <div class="form-group">
           <label><strong>Status:</strong></label>
-          {{ currentBook.published ? 'Published' : 'Pending' }}
+          {{ currentBook.published ? "Published" : "Pending" }}
         </div>
       </div>
     </form>
 
-    <button class="badge badge-primary mr-2" v-if="currentBook.published" @click="updatePublished(false)">
+    <button
+      class="badge badge-primary mr-2"
+      v-if="currentBook.published"
+      @click="updatePublished(false)"
+    >
       UnPublish
     </button>
-    <button v-else class="badge badge-primary mr-2" @click="updatePublished(true)">
+    <button
+      v-else
+      class="badge badge-primary mr-2"
+      @click="updatePublished(true)"
+    >
       Publish
     </button>
 
-    <button class="badge badge-danger mr-2" @click="deleteBook">
-      Delete
-    </button>
+    <button class="badge badge-danger mr-2" @click="deleteBook">Delete</button>
 
     <button type="submit" class="badge badge-success" @click="updateBook">
       Update
@@ -102,6 +113,11 @@ export default {
       this.message = '';
       this.getBook(this.$route.params.id);
     },
+
+    /* mounted() {
+      GenericRESTDataService.getAll()
+        .then(result => { this.jsonObjects = result })
+    }, */
   },
 };
 </script>
