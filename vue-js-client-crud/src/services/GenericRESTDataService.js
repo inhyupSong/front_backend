@@ -3,63 +3,40 @@ import http from "../http-common";
 //import config from process.env.VUE_APP_EXT_REST_CONFIG_1_dots; //"./config";
 import config from "../config";
 
+const transformAttributes = (result) => {
+  return {
+    jItem_0: result[config.attrbiutes.variable_0],
+    jItem_1: result[config.attrbiutes.variable_1],
+    jItem_2: result[config.attrbiutes.variable_2],
+    jItem_3: result[config.attrbiutes.variable_3],
+    jItem_4: result[config.attrbiutes.variable_4],
+    jItem_5: result[config.attrbiutes.variable_5]
+  };
+};
+
+
 class GenericRESTDataService {
   async getAll() {
     const response = await http.get("/" + config.RessourceName);
 
     return response.data[config.RessourceName].map(obj => {
+      return transformAttributes(obj);
+      /* Gleiche wie oben!!
+      return http.get("/" + config.RessourceName).then(response => {
+    return response.data[config.RessourceName].map(obj => {
       return {
-        jItem_0: obj[config.attrbiutes.variable_0],
-        jItem_1: obj[config.attrbiutes.variable_1],
-        jItem_2: obj[config.attrbiutes.variable_2],
-        jItem_3: obj[config.attrbiutes.variable_3],
-        jItem_4: obj[config.attrbiutes.variable_4],
-        jItem_5: obj[config.attrbiutes.variable_5]
-
-        /* Gleiche wie oben!!
-        return http.get("/" + config.RessourceName).then(response => {
-      return response.data[config.RessourceName].map(obj => {
-        return {
-          jItem_1: obj.title,
-          jItem_2: obj.author,
-          jItem_3: obj.abstract */
-      };
+        jItem_1: obj.title,
+        jItem_2: obj.author,
+        jItem_3: obj.abstract */
     });
   }
 
-  async findById() {
+  async findById(id) {
     //TODO:  maket the function "Search by ID" work.
     //const response = await http.get(`/books/${id}`);
-    /* const result = await http.get("/books/1");
-    return result.map(obj => {
-      return {
-        jItem_0: obj[config.attrbiutes.variable_0],
-        jItem_1: obj[config.attrbiutes.variable_1],
-        jItem_2: obj[config.attrbiutes.variable_2],
-        jItem_3: obj[config.attrbiutes.variable_3],
-        jItem_4: obj[config.attrbiutes.variable_4],
-        jItem_5: obj[config.attrbiutes.variable_5]
-      }; 
-      });*/
-    /* var a = response.data[config.attrbiutes.variable_0];
-    var b = response.data[config.attrbiutes.variable_1];
-    var c = response.data[config.attrbiutes.variable_2];
-    var d = response.data[config.attrbiutes.variable_3];
-    var e = response.data[config.attrbiutes.variable_4];
-    var f = response.data[config.attrbiutes.variable_5]; 
+    const response = await http.get(`/books/${id}`);
+    return transformAttributes(response.data);
 
-     var return_object = {
-      jItem_0: a,
-      jItem_1: b,
-      jItem_2: c,
-      jItem_3: d,
-      jItem_4: e,
-      jItem_5: f 
-    };
-
-     return {
-      return_object
-    }; */
   }
 
   create(data) {
