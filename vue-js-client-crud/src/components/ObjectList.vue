@@ -29,29 +29,9 @@
           @click="setActiveBook(jsonObject, index)"
         >
           <div>
-            <tr>
-              id:
-              <td>{{ jsonObject.jItem_0 }}</td>
-            </tr>
-            <tr>
-              title:
-              <td>{{ jsonObject.jItem_1 }}</td>
-            </tr>
-            <tr>
-              author:
-              <td>{{ jsonObject.jItem_2 }}</td>
-            </tr>
-            <tr>
-              abstract:
-              <td>{{ jsonObject.jItem_3 }}</td>
-            </tr>
-            <tr>
-              length:
-              <td>{{ jsonObject.jItem_4 }}</td>
-            </tr>
-            <tr>
-              rating:
-              <td>{{ jsonObject.jItem_5 }}</td>
+            <tr v-for="(value, key) in jsonObject" v-bind:key="key">
+              <td>{{ key }}</td>
+              <td>{{ value }}</td>
             </tr>
           </div>
         </li>
@@ -88,15 +68,16 @@ export default {
       jsonObjects: [],
       currentBook: null,
       currentIndex: -1,
-      searchedId: this.searchedId,
+      searchedId: '',
 
       //title: this.currentBook.title,
     };
   },
   methods: {
     retrieveBooks() {
-      GenericRESTDataService.getAll()
-        .then(result => { this.jsonObjects = result })
+      GenericRESTDataService.getAll().then(result => {
+        this.jsonObjects = result;
+      });
 
       /* same to above
       .then(response => {
@@ -117,8 +98,9 @@ export default {
     },
 
     searchId() {
-      GenericRESTDataService.findById()
-        .then(result => { this.jsonObjects = result })
+      GenericRESTDataService.findById(this.searchedId).then(result => {
+        this.jsonObjects = result;
+      });
     },
     /* searchId() {
       GenericRESTDataService.findById(this.searchedId)
@@ -136,152 +118,11 @@ export default {
           console.log(e);
         });
     }, */
-
   },
 
   mounted() {
     this.retrieveBooks();
-    //this.searchId
-  },
-}
-</script>
-
-<style>
-.list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
-}
-</style>
-
-<!-- ORIGINAL!!!!!! 
-<template>
-  <div class="list row">
-    <div class="col-md-8">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by title" v-model="title" /> 
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" @click="searchTitle">
-            Search
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <h4>Books List</h4>
-      <ul class="list-group">
-        <li
-          class="list-group-item"
-          :class="{ active: index == currentIndex }"
-          v-for="(jsonObject, index) in jsonObjects"
-          :key="index"
-          @click="setActiveBook(jsonObject, index)"
-        >
-          <div>
-            <tr>
-              <td>{{ jsonObject.jItem_1 }}</td>
-            </tr>
-            <tr>
-              <td>{{ jsonObject.jItem_2 }}</td>
-            </tr>
-            <tr>
-              <td>{{ jsonObject.jItem_3 }}</td>
-            </tr>
-            
-            <tr>
-              <td>{{ book.title }}</td>
-            </tr>
-            <tr>
-              <td>{{ book.author }}</td>
-            </tr>
-            <tr>
-              <td>{{ book.abstract }}</td>
-            </tr>
-            <tr>
-              <td>{{ book.length }}</td>
-            </tr>
-            <tr>
-              <td>{{ book.rating }}</td> 
-            </tr>
-          </div>
-        </li>
-      </ul>
-      <button class="m-3 btn btn-sm btn-danger" @click="removeAllBooks">
-        Remove All
-      </button>
-    </div>
-    <div class="col-md-6">
-      <div v-if="currentBook">
-        <h4>Book</h4>
-        <div>
-          <label><strong>Title:</strong></label> {{ currentBook.title }}
-        </div>
-        <a class="badge badge-warning" :href="'/books/' + currentBook.id">
-          Edit
-        </a>
-      </div>
-      <div v-else>
-        <br />
-        <p>Please click on a Book...</p>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script>
-import BookDataService from '../services/BookDataService';
-
-export default {
-  name: 'bookList',
-  data() {
-    return {
-      jsonObjects: [],
-    };
-  },
-
-  methods: {
-    /* JSON GET */
-    retrieveBooks() {
-      BookDataService.getAll()
-        .then(response => {
-          this.jsonObjects = response.data.books;
-          //console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-    refreshList() {
-      this.retrieveBooks();
-      this.currentBook = null;
-      this.currentIndex = -1;
-    },
-
-    searchTitle() {
-      BookDataService.findByTitle(this.title)
-        .then(response => {
-          this.books = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-  },
-
-  /* Calling  */
-  mounted() {
-    BookDataService.getAll().then(response => {
-      this.jsonObjects = response.data.books.map(book => {
-        return {
-          jItem_1: book.title,
-          jItem_2: book.author,
-          jItem_3: book.abstract,
-        };
-      });
-      //console.log(this.jsonObjects);
-    });
+    //this.searchId();
   },
 };
 </script>
@@ -293,4 +134,3 @@ export default {
   margin: auto;
 }
 </style>
--->
