@@ -3,7 +3,7 @@ import http from "../http-common";
 //import config from process.env.VUE_APP_EXT_REST_CONFIG_1_dots; //"./config";
 import config from "../config";
 
-const transformAttributes = (result) => {
+const transformAttributes = result => {
   return {
     jItem_0: result[config.attrbiutes.variable_0],
     jItem_1: result[config.attrbiutes.variable_1],
@@ -13,7 +13,6 @@ const transformAttributes = (result) => {
     jItem_5: result[config.attrbiutes.variable_5]
   };
 };
-
 
 class GenericRESTDataService {
   async getAll() {
@@ -34,9 +33,8 @@ class GenericRESTDataService {
   async findById(id) {
     //TODO:  maket the function "Search by ID" work.
     //const response = await http.get(`/books/${id}`);
-    const response = await http.get(`/books/${id}`);
+    const response = await http.get("/books/1");
     return transformAttributes(response.data);
-
   }
 
   create(data) {

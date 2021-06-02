@@ -140,8 +140,8 @@ export default {
   },
 
   mounted() {
-    //this.retrieveBooks();
-    this.searchId
+    this.retrieveBooks();
+    //this.searchId
   },
 }
 </script>
