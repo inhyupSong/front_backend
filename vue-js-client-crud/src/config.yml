@@ -2,18 +2,9 @@ URI: http://localhost:5001
 RessourceName: books
 
 attrbiutes:
-  variable_0: id
-  variable_1: title
-  variable_2: author
-  variable_3: abstract
-  variable_4: length
-  variable_5: rating
-  
-  
-  author: text
-  abstract: long
-  length: int 
-  rating: float
-
-
-
+  - id
+  - title
+  - abstract
+  - author
+  - length
+  - rating

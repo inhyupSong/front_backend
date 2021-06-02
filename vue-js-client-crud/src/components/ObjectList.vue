@@ -2,18 +2,9 @@
   <div class="list row">
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search by Id"
-          v-model="searchedId"
-        />
+        <input type="text" class="form-control" placeholder="Search by Id" v-model="searchedId" />
         <div class="input-group-append"></div>
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          @click="searchId"
-        >
+        <button class="btn btn-outline-secondary" type="button" @click="searchId">
           Search
         </button>
       </div>
@@ -29,29 +20,9 @@
           @click="setActiveBook(jsonObject, index)"
         >
           <div>
-            <tr>
-              id:
-              <td>{{ jsonObject.jItem_0 }}</td>
-            </tr>
-            <tr>
-              title:
-              <td>{{ jsonObject.jItem_1 }}</td>
-            </tr>
-            <tr>
-              author:
-              <td>{{ jsonObject.jItem_2 }}</td>
-            </tr>
-            <tr>
-              abstract:
-              <td>{{ jsonObject.jItem_3 }}</td>
-            </tr>
-            <tr>
-              length:
-              <td>{{ jsonObject.jItem_4 }}</td>
-            </tr>
-            <tr>
-              rating:
-              <td>{{ jsonObject.jItem_5 }}</td>
+            <tr v-for="(value, key) in jsonObject" v-bind:key="key">
+              <td>{{ key }}</td>
+              <td>{{ value }}</td>
             </tr>
           </div>
         </li>
@@ -88,15 +59,16 @@ export default {
       jsonObjects: [],
       currentBook: null,
       currentIndex: -1,
-      searchedId: this.searchedId,
+      searchedId: '',
 
       //title: this.currentBook.title,
     };
   },
   methods: {
     retrieveBooks() {
-      GenericRESTDataService.getAll()
-        .then(result => { this.jsonObjects = result })
+      GenericRESTDataService.getAll().then(result => {
+        this.jsonObjects = result;
+      });
 
       /* same to above
       .then(response => {
@@ -117,8 +89,9 @@ export default {
     },
 
     searchId() {
-      GenericRESTDataService.findById()
-        .then(result => { this.jsonObjects = result })
+      GenericRESTDataService.findById(this.searchedId).then(result => {
+        this.jsonObjects = result;
+      });
     },
     /* searchId() {
       GenericRESTDataService.findById(this.searchedId)
@@ -136,14 +109,13 @@ export default {
           console.log(e);
         });
     }, */
-
   },
 
   mounted() {
-    //this.retrieveBooks();
-    this.searchId
+    this.retrieveBooks();
+    //this.searchId();
   },
-}
+};
 </script>
 
 <style>
