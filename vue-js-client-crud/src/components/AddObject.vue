@@ -6,27 +6,29 @@
 
     <div class="field-table">
       <div v-if="!submitted">
+        <!-- v-if="counterIncrement(index)" --> <!-- v-for="field in fields"> :key="field.message"> 
+                  <p v-if="counterIncrement(index)"></p> 
+                  <td>{{ field.message }}</td>-->
         <form>
           <div class="row">
             <div class="col">
               <table>
-                <!-- v-if="counterIncrement(index)" -->
-
-                <tr> <!-- v-for="field in fields"> :key="field.message"> 
-                  <p v-if="counterIncrement(index)"></p> 
-                  <td>{{ field.message }}</td>-->
-                  <label>id</label>
+                <tr>
+                  <td>
+                    <label>Title</label>
+                  </td>
                   <td>
                     <input
                       type="text"
                       class="form-control"
-                      id="object.message"
+                      id="title"
                       required
-                      v-model="jsonObject.variable_1"
+                      v-model="object.variable_1"
                       name="title"
                     />
                   </td>
                   <br /><br />
+
                   <td>
                     <label>author</label>
                   </td>
@@ -111,15 +113,15 @@ export default {
   name: 'add-object',
   data() {
     return {
-      fields: [
+      /* fields: [
         { message: 'id' },
         { message: 'title' },
         { message: 'abstract' },
         { message: 'author' },
         { message: 'length' },
         { message: 'rating' }
-      ],
-      jsonObject: {
+      ], */
+      object: {
         variable_0: null,
         variable_1: '',
         variable_2: '',
@@ -129,14 +131,14 @@ export default {
       },
       submitted: false,
 
-      counter: 0,
+      //counter: 0,
     };
 
   },
   methods: {
-    counterIncrement(index) {
+    /* counterIncrement(index) {
       this.counter += 1;
-    },
+    }, */
 
     saveBook() {
       var data = {

@@ -1,26 +1,29 @@
-import Vue from "vue";
-import Router from "vue-router";
+import Vue from 'vue';
+import Router from 'vue-router';
 //import Home from './components/Home.vue'
 //import RestaurantDetail from './components/RestaurantDetail.vue'
 
 Vue.use(Router);
 
 export default new Router({
-  //mode: 'history',
+  mode: 'history',
   routes: [
     {
-      path: "/search",
-      component: () => import("./components/ObjectList")
+      path: '/',
+      alias: '/objects',
+      name: 'objects',
+      component: () => import('./components/ObjectList'),
     },
     {
-      path: "/add",
-      component: () => import("./components/AddObject")
+      path: '/add',
+      //path: 'add',
+      component: () => import('./components/AddObject'),
     },
 
     {
-      path: "/home",
-      name: "book-details",
-      component: () => import("./components/Home")
-    }
-  ]
+      path: '/objects/:id',
+      name: 'object-details',
+      component: () => import('./components/Object'),
+    },
+  ],
 });

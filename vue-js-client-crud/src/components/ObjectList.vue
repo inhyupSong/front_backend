@@ -2,18 +2,9 @@
   <div class="list row">
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search by Id"
-          v-model="searchedId"
-        />
+        <input type="text" class="form-control" placeholder="Search by Id" v-model="searchedId" />
         <div class="input-group-append"></div>
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          @click="searchId"
-        >
+        <button class="btn btn-outline-secondary" type="button" @click="searchId">
           Search
         </button>
       </div>
@@ -59,11 +50,17 @@
             </tr>
           </table>
         </div>
+        <tr>
+          <button class="badge badge-danger mr-2" @click="deleteObject">Delete</button>
+          <a class="badge badge-danger mr-2" :href="'/objects/' + currentJsonObject.id">Edit</a>
 
-        <a class="badge badge-warning" :href="'/books/' + currentJsonObject.id">
-          Edit
-        </a>
+          <!-- <button class="badge badge-warning" :href="'/books/' + currentJsonObject.id"> -->
+          <!-- <button class="badge badge-warning" @click="editBook">
+            Edit
+          </button> -->
+        </tr>
       </div>
+
       <div v-else>
         <br />
         <p>Please click on a Book...</p>
@@ -82,7 +79,7 @@ export default {
       jsonObjects: [],
       currentJsonObject: null,
       currentIndex: -1,
-      searchedId: null
+      searchedId: null,
 
       //title: this.currentBook.title,
     };
@@ -109,8 +106,6 @@ export default {
       this.currentIndex = index;
     },
 
-
-
     refreshList() {
       this.retrieveGenericRessource();
       this.currentBook = null;
@@ -118,41 +113,31 @@ export default {
     },
 
     searchId() {
-      if (this.searchId !== '') {
+      if (this.searchedId !== '') {
         GenericRESTDataService.findById(this.searchedId).then(result => {
           this.jsonObjects = result;
+          this.searchedId = '';
         });
-
-        //do not know how to remove "/"" from the URL==================================================== help
-      } else {
-        //retrieveBooks() {
+      } else if (this.searchedID == null) {
         GenericRESTDataService.getAll().then(result => {
           this.jsonObjects = result;
         });
       }
-    }
-
-    /* searchId() {
-      GenericRESTDataService.findById(this.searchedId)
-      .then(console.log(this.searchedId))
-      .then(result => { this.jsonObjects = result })
-    } */
-    /* searchId() {
-      //var wantedID = this.searchedId;
-      GenericRESTDataService.findById(this.searchedId)
-        .then(response => {
-          this.books = response.data;
-          console.log(response.data);
+    },
+    deleteObject() {
+      GenericRESTDataService.delete(this.currentJsonObject.id)
+        .then(result => {
+          console.log(result.data);
+          this.$router.push({ name: 'objects' });
         })
         .catch(e => {
           console.log(e);
         });
-    }, */
+    },
   },
 
   mounted() {
     this.retrieveBooks();
-    //this.searchId();
   },
 };
 </script>

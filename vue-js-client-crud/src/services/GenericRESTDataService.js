@@ -1,11 +1,11 @@
 //import axios from 'axios';
-import http from "../http-common";
+import http from '../http-common';
 //import config from process.env.VUE_APP_EXT_REST_CONFIG_1_dots; //"./config";
-import config from "../config";
+import config from '../config';
 
 class GenericRESTDataService {
   async getAll() {
-    const response = await http.get("/" + config.RessourceName);
+    const response = await http.get('/' + config.RessourceName);
 
     return response.data[config.RessourceName];
   }
@@ -46,7 +46,7 @@ class GenericRESTDataService {
     data[config.attribiutesTest.variable_4] = data.variable_4;
     data[config.attribiutesTest.variable_5] = data.variable_5;
 
-    return http.post("/" + config.RessourceName, data).then(result => {
+    return http.post('/' + config.RessourceName, data).then(result => {
       return result.data[config.attribiutesTest.variable_0];
     });
     //return http.post("/books", data);

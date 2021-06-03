@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
- 
+
 /* BootstrapVue */
-/* import { BootstrapVue } from 'bootstrap-vue';
+import { BootstrapVue } from 'bootstrap-vue';
 import { BIcon, BIconChevronDoubleDown, BIconChevronDoubleUp, BIconEyeFill, BIconEyeSlashFill } from 'bootstrap-vue';
 Vue.use(BootstrapVue);
 Vue.component('BIcon', BIcon);
@@ -14,8 +14,7 @@ Vue.component('BIconEyeSlashFill', BIconEyeSlashFill);
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css'; */
- 
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 new Vue({
   router,
