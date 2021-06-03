@@ -12,9 +12,10 @@
               <table>
                 <!-- v-if="counterIncrement(index)" -->
 
-                <tr v-for="field in fields" :key="field.message">
-                  <!-- <p v-if="counterIncrement(index)"></p> -->
-                  <td>{{ field.message }}</td>
+                <tr> <!-- v-for="field in fields"> :key="field.message"> 
+                  <p v-if="counterIncrement(index)"></p> 
+                  <td>{{ field.message }}</td>-->
+                  <label>id</label>
                   <td>
                     <input
                       type="text"
@@ -26,10 +27,7 @@
                     />
                   </td>
                   <br /><br />
-                </tr>
-              </table>
-
-              <!--  <td>
+                  <td>
                     <label>author</label>
                   </td>
                   <td>
@@ -89,7 +87,7 @@
                   </td>
                   <br /><br />
                 </tr>
-              </table> -->
+              </table>
             </div>
           </div>
         </form>
