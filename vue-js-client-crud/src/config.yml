@@ -8,3 +8,12 @@ attrbiutes:
   - author
   - length
   - rating
+
+# Creat need refactoring !!!!
+attribiutesTest:
+  variable_0: id
+  variable_1: title
+  variable_2: abstract
+  variable_3: author
+  variable_4: length
+  variable_5: rating

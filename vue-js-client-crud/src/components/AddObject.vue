@@ -10,23 +10,26 @@
           <div class="row">
             <div class="col">
               <table>
-                <tr>
-                  <td>
-                    <label>Title</label>
-                  </td>
+                <!-- v-if="counterIncrement(index)" -->
+
+                <tr v-for="field in fields" :key="field.message">
+                  <!-- <p v-if="counterIncrement(index)"></p> -->
+                  <td>{{ field.message }}</td>
                   <td>
                     <input
                       type="text"
                       class="form-control"
-                      id="title"
+                      id="object.message"
                       required
-                      v-model="object.variable_1"
+                      v-model="jsonObject.variable_1"
                       name="title"
                     />
                   </td>
                   <br /><br />
+                </tr>
+              </table>
 
-                  <td>
+              <!--  <td>
                     <label>author</label>
                   </td>
                   <td>
@@ -86,7 +89,7 @@
                   </td>
                   <br /><br />
                 </tr>
-              </table>
+              </table> -->
             </div>
           </div>
         </form>
@@ -110,7 +113,15 @@ export default {
   name: 'add-object',
   data() {
     return {
-      object: {
+      fields: [
+        { message: 'id' },
+        { message: 'title' },
+        { message: 'abstract' },
+        { message: 'author' },
+        { message: 'length' },
+        { message: 'rating' }
+      ],
+      jsonObject: {
         variable_0: null,
         variable_1: '',
         variable_2: '',
@@ -119,9 +130,16 @@ export default {
         variable_5: '',
       },
       submitted: false,
+
+      counter: 0,
     };
+
   },
   methods: {
+    counterIncrement(index) {
+      this.counter += 1;
+    },
+
     saveBook() {
       var data = {
         variable_1: this.object.variable_1,
@@ -129,11 +147,6 @@ export default {
         variable_3: this.object.variable_3,
         variable_4: this.object.variable_4,
         variable_5: this.object.variable_5,
-        /* title: this.object.variable_1,
-        author: this.object.variable_2,
-        abstract: this.object.variable_3,
-        length: this.object.variable_4,
-        rating: this.object.variable_5, */
       };
 
       GenericRESTDataService.create(data)

@@ -18,7 +18,8 @@
         </button>
       </div>
     </div>
-    <div class="col-md-12">
+
+    <div class="col-md-6">
       <h4>List</h4>
       <ul class="list-group">
         <li
@@ -26,27 +27,40 @@
           :class="{ active: index == currentIndex }"
           v-for="(jsonObject, index) in jsonObjects"
           :key="index"
-          @click="setActiveBook(jsonObject, index)"
+          @click="setActiveJsonObject(jsonObject, index)"
         >
-          <div>
+          {{ jsonObject.title }}
+        </li>
+      </ul>
+      <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeAllBooks">
+        Remove All
+      </button> -->
+
+      <!-- <div>
             <tr v-for="(value, key) in jsonObject" v-bind:key="key">
               <td>{{ key }}</td>
               <td>{{ value }}</td>
             </tr>
           </div>
         </li>
-      </ul>
-      <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeAllBooks">
-        Remove All
-      </button> -->
+      </ul> -->
     </div>
+
     <div class="col-md-6">
-      <div v-if="currentBook">
-        <h4>Book</h4>
+      <div v-if="currentJsonObject">
+        <h4>Object</h4>
         <div>
-          <label><strong>id:</strong></label> {{ currentBook.id }}
+          <table>
+            <tr v-for="(value, key) in currentJsonObject" v-bind:key="key">
+              <label
+                ><strong>{{ key }}</strong></label
+              >
+              <td>{{ value }}</td>
+            </tr>
+          </table>
         </div>
-        <a class="badge badge-warning" :href="'/books/' + currentBook.id">
+
+        <a class="badge badge-warning" :href="'/books/' + currentJsonObject.id">
           Edit
         </a>
       </div>
@@ -66,9 +80,9 @@ export default {
   data() {
     return {
       jsonObjects: [],
-      currentBook: null,
+      currentJsonObject: null,
       currentIndex: -1,
-      searchedId: '',
+      searchedId: null
 
       //title: this.currentBook.title,
     };
@@ -90,6 +104,12 @@ export default {
     /* async mounted() {
       this.jsonObjects = await GenericRESTDataService.getAll()
       }*/
+    setActiveJsonObject(jsonObject, index) {
+      this.currentJsonObject = jsonObject;
+      this.currentIndex = index;
+    },
+
+
 
     refreshList() {
       this.retrieveGenericRessource();
@@ -98,10 +118,20 @@ export default {
     },
 
     searchId() {
-      GenericRESTDataService.findById(this.searchedId).then(result => {
-        this.jsonObjects = result;
-      });
-    },
+      if (this.searchId !== '') {
+        GenericRESTDataService.findById(this.searchedId).then(result => {
+          this.jsonObjects = result;
+        });
+
+        //do not know how to remove "/"" from the URL==================================================== help
+      } else {
+        //retrieveBooks() {
+        GenericRESTDataService.getAll().then(result => {
+          this.jsonObjects = result;
+        });
+      }
+    }
+
     /* searchId() {
       GenericRESTDataService.findById(this.searchedId)
       .then(console.log(this.searchedId))

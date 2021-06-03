@@ -40,14 +40,14 @@ class GenericRESTDataService {
   }
 
   create(data) {
-    data[config.attrbiutes.variable_1] = data.variable_1;
-    data[config.attrbiutes.variable_2] = data.variable_2;
-    data[config.attrbiutes.variable_3] = data.variable_3;
-    data[config.attrbiutes.variable_4] = data.variable_4;
-    data[config.attrbiutes.variable_5] = data.variable_5;
+    data[config.attribiutesTest.variable_1] = data.variable_1;
+    data[config.attribiutesTest.variable_2] = data.variable_2;
+    data[config.attribiutesTest.variable_3] = data.variable_3;
+    data[config.attribiutesTest.variable_4] = data.variable_4;
+    data[config.attribiutesTest.variable_5] = data.variable_5;
 
     return http.post("/" + config.RessourceName, data).then(result => {
-      return result.data[config.attrbiutes.variable_0];
+      return result.data[config.attribiutesTest.variable_0];
     });
     //return http.post("/books", data);
   }
