@@ -52,7 +52,7 @@ class GenericRESTDataService {
     //return http.post("/books", data);
   }
 
-  get(id) {
+  async get(id) {
     return http.get(`/books/${id}`);
   }
 
@@ -67,33 +67,6 @@ class GenericRESTDataService {
   deleteAll() {
     return http.delete(`/books`);
   }
-
-  /* async findById() {
-    //return http.get(`/books/${id}`).then(result => {
-
-    //const response = await http.get(`/books/${id}`);
-    const response = await http.get("/books/1");
-
-    return response.data[config.RessourceName].map(obj => {
-      return {
-        jItem_0: obj[config.attrbiutes.variable_0],
-        jItem_1: obj[config.attrbiutes.variable_1],
-        jItem_2: obj[config.attrbiutes.variable_2],
-        jItem_3: obj[config.attrbiutes.variable_3],
-        jItem_4: obj[config.attrbiutes.variable_4],
-        jItem_5: obj[config.attrbiutes.variable_5]
-      };
-    });
-  } */
-
-  /* return http.get(`/books?title=${title}`).then(result => {
-      return result.data; //[config.RessourceName]
-    });  */
-  //return http.get(`/books/${id}`);
-  /*   
-  fcuk(){
-    return http.get("/posts");
-  } */
 }
 
 export default new GenericRESTDataService();

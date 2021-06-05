@@ -51,19 +51,13 @@
           </table>
         </div>
         <tr>
-          <button class="badge badge-danger mr-2" @click="deleteObject">Delete</button>
           <a class="badge badge-danger mr-2" :href="'/objects/' + currentJsonObject.id">Edit</a>
-
-          <!-- <button class="badge badge-warning" :href="'/books/' + currentJsonObject.id"> -->
-          <!-- <button class="badge badge-warning" @click="editBook">
-            Edit
-          </button> -->
         </tr>
       </div>
 
       <div v-else>
         <br />
-        <p>Please click on a Book...</p>
+        <p>Please click on a Object...</p>
       </div>
     </div>
   </div>
@@ -80,12 +74,10 @@ export default {
       currentJsonObject: null,
       currentIndex: -1,
       searchedId: null,
-
-      //title: this.currentBook.title,
     };
   },
   methods: {
-    retrieveBooks() {
+    retrieveObjects() {
       GenericRESTDataService.getAll().then(result => {
         this.jsonObjects = result;
       });
@@ -108,7 +100,7 @@ export default {
 
     refreshList() {
       this.retrieveGenericRessource();
-      this.currentBook = null;
+      this.currentObject = null;
       this.currentIndex = -1;
     },
 
@@ -124,20 +116,10 @@ export default {
         });
       }
     },
-    deleteObject() {
-      GenericRESTDataService.delete(this.currentJsonObject.id)
-        .then(result => {
-          console.log(result.data);
-          this.$router.push({ name: 'objects' });
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
   },
 
   mounted() {
-    this.retrieveBooks();
+    this.retrieveObjects();
   },
 };
 </script>
