@@ -7,8 +7,7 @@
           <label
             ><strong>{{ key }}</strong></label
           >
-          <input type="text" :value="value" :v-model="currentJsonObject.value" />
-          <!-- :v-model="object.variable_0" -->
+          <input type="text" v-model="currentJsonObject[key]" />
         </tr>
       </table>
     </form>
@@ -40,6 +39,7 @@
 
 <script>
 import GenericRESTDataService from '../services/GenericRESTDataService';
+import config from '../config';
 
 export default {
   name: 'jsonObject',
@@ -54,7 +54,7 @@ export default {
     getObjectById(id) {
       GenericRESTDataService.get(id)
         .then(response => {
-          this.currentJsonObject = response.data.book;
+          this.currentJsonObject = response.data[config.singleResourceName];
           console.log(this.currentJsonObject);
         })
         .catch(e => {
@@ -63,10 +63,10 @@ export default {
     },
 
     updateObject() {
-      this.index === 0 ? (this.index = 1) : (this.index = 0);
-      GenericRESTDataService.update(this.currentJsonObject.id, currentJsonObject[index])
+      console.log(this.currentJsonObject)
+      GenericRESTDataService.update(this.currentJsonObject.id, this.currentJsonObject)
         .then(response => {
-          console.log(response.data.book);
+          console.log(response);
           this.message = 'The Oject was updated successfully!';
         })
         .catch(e => {

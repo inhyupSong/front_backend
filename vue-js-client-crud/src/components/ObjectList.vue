@@ -2,9 +2,18 @@
   <div class="list row">
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by Id" v-model="searchedId" />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by Id"
+          v-model="searchedId"
+        />
         <div class="input-group-append"></div>
-        <button class="btn btn-outline-secondary" type="button" @click="searchId">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          @click="searchId"
+        >
           Search
         </button>
       </div>
@@ -51,7 +60,11 @@
           </table>
         </div>
         <tr>
-          <a class="badge badge-danger mr-2" :href="'/objects/' + currentJsonObject.id">Edit</a>
+          <a
+            class="badge badge-danger mr-2"
+            :href="'/objects/' + currentJsonObject.id"
+            >Edit</a
+          >
         </tr>
       </div>
 
@@ -110,10 +123,11 @@ export default {
           this.jsonObjects = result;
           this.searchedId = '';
         });
-      } else if (this.searchedID == null) {
-        GenericRESTDataService.getAll().then(result => {
-          this.jsonObjects = result;
-        });
+      } else {
+        if (this.searchedID == null)
+          GenericRESTDataService.getAll().then(result => {
+            this.jsonObjects = result;
+          });
       }
     },
   },
