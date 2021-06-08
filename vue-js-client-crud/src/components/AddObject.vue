@@ -6,59 +6,24 @@
 
     <div class="field-table">
       <div v-if="!submitted">
-        <!-- v-if="counterIncrement(index)" -->
-        <!-- v-for="field in fields"> :key="field.message"> 
-                  <p v-if="counterIncrement(index)"></p> 
-                  <td>{{ field.message }}</td>-->
-        <form>
-          <div class="row">
-            <div class="col">
-              <table>
-                <tr>
-                  <td>
-                    <label>Title</label>
-                  </td>
-                  <td>
-                    <input type="text" class="form-control" id="title" required v-model="object.variable_1" name="title" />
-                  </td>
-                  <br /><br />
-
-                  <td>
-                    <label>author</label>
-                  </td>
-                  <td>
-                    <input type="text" class="form-control" id="author" required v-model="object.variable_2" name="title" />
-                  </td>
-                  <br /><br />
-
-                  <td>
-                    <label>abstract</label>
-                  </td>
-                  <td>
-                    <input type="text" class="form-control" id="abstract" required v-model="object.variable_3" name="title" />
-                  </td>
-                  <br /><br />
-
-                  <td>
-                    <label>length</label>
-                  </td>
-                  <td>
-                    <input type="text" class="form-control" id="length" required v-model="object.variable_4" name="title" />
-                  </td>
-                  <br /><br />
-
-                  <td>
-                    <label>rating</label>
-                  </td>
-                  <td>
-                    <input type="text" class="form-control" id="rating" required v-model="object.variable_5" name="title" />
-                  </td>
-                  <br /><br />
-                </tr>
-              </table>
+        <table>
+          <tr v-for="(value, key) in genericObject" v-bind:key="key">
+            <div v-if="value !== null">
+              <label
+                ><strong>{{ key }}</strong></label
+              >
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  v-model="genericObject[key]"
+                />
+              </td>
             </div>
-          </div>
-        </form>
+          </tr>
+        </table>
+
         <br /><br />
         <div id="submit-button">
           <button @click="saveBook" class="btn btn-success">Submit</button>
@@ -74,35 +39,37 @@
 </template>
 <script>
 import GenericRESTDataService from '../services/GenericRESTDataService';
+import config from '../config';
 
 export default {
   name: 'add-object',
   data() {
     return {
-      object: {
+      genericObject: { ...config.newEntity },
+      /* genericObject: {
         variable_0: null,
         variable_1: '',
         variable_2: '',
         variable_3: '',
         variable_4: '',
         variable_5: '',
-      },
+      }, */
       submitted: false,
     };
   },
   methods: {
     saveBook() {
-      var data = {
-        variable_1: this.object.variable_1,
-        variable_2: this.object.variable_2,
-        variable_3: this.object.variable_3,
-        variable_4: this.object.variable_4,
-        variable_5: this.object.variable_5,
-      };
+      /*  var data = {
+         variable_1: this.genericObject.variable_1,
+         variable_2: this.genericObject.variable_2,
+         variable_3: this.genericObject.variable_3,
+         variable_4: this.genericObject.variable_4,
+         variable_5: this.genericObject.variable_5,
+       }; */
 
-      GenericRESTDataService.create(data)
+      GenericRESTDataService.create(this.genericObject)
         .then(result => {
-          this.object.variable_0 = result;
+          this.genericObject.id = result;
           this.submitted = true;
         })
         .catch(e => {
@@ -118,9 +85,13 @@ export default {
       }); */
     },
 
+    getAttributeByKey(key) {
+      return config.attribiutesTest[key]
+    },
+
     newBook() {
       this.submitted = false;
-      this.object = {};
+      this.genericObject = { ...config.newEntity };
     },
   },
 };

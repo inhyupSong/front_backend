@@ -1,6 +1,7 @@
 URI: http://localhost:5001
 RessourceName: books
-
+#Attributes must have a an id!
+singleResourceName: book
 attrbiutes:
   - id
   - title
@@ -9,11 +10,10 @@ attrbiutes:
   - length
   - rating
 
-# Creat need refactoring !!!!
-attribiutesTest:
-  variable_0: id
-  variable_1: title
-  variable_2: abstract
-  variable_3: author
-  variable_4: length
-  variable_5: rating
+newEntity:
+  id: null
+  title: ''
+  abstract: ''
+  author: ''
+  length: ''
+  rating: ''
