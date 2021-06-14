@@ -3,8 +3,8 @@
     <nav class="navbar navbar-expand navbar-dark bg-dark">
       <router-link to="/home" class="navbar-brand">Home </router-link>
       <div class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link to="/search" class="nav-link">Search</router-link>
+        <li class="nav-brand">
+          <router-link to="/objects" class="nav-link">Search</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/add" class="nav-link">Add</router-link>

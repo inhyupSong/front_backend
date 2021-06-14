@@ -6,21 +6,30 @@ import Router from "vue-router";
 Vue.use(Router);
 
 export default new Router({
-  //mode: 'history',
+  mode: "history",
   routes: [
     {
-      path: "/search",
+      path: "/",
+      alias: "/objects",
+      name: "objects",
       component: () => import("./components/ObjectList")
     },
+
     {
       path: "/add",
+      //path: 'add',
       component: () => import("./components/AddObject")
     },
 
     {
-      path: "/home",
-      name: "book-details",
-      component: () => import("./components/Home")
+      path: "/objects/:id",
+      name: "object-details",
+      component: () => import("./components/Object")
+    },
+
+    {
+      path: "/duplicatesCleanup",
+      component: () => import("./components/DuplicatesCleanup")
     }
   ]
 });

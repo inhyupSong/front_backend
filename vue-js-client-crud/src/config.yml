@@ -1,6 +1,7 @@
 URI: http://localhost:5001
 RessourceName: books
-
+#Attributes must have a an id!
+singleResourceName: book
 attrbiutes:
   - id
   - title
@@ -8,3 +9,11 @@ attrbiutes:
   - author
   - length
   - rating
+
+newEntity:
+  id: null
+  title: ''
+  abstract: ''
+  author: ''
+  length: ''
+  rating: ''
