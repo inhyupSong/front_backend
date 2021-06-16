@@ -40,7 +40,7 @@
     <div class="col-md-6">
       <h4>List</h4>
       <ul class="list-group">
-        <p>name: {{ boxCheckedObjects }}</p>
+        <!-- <p>name: {{ boxCheckedObjects }}</p> -->
         <li
           class="list-group-item"
           :class="{ active: index == currentIndex }"
