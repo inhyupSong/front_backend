@@ -28,7 +28,9 @@ export default new Router({
     },
 
     {
+      name: "duplicatesCleanup",
       path: "/duplicatesCleanup",
+      props: true,
       component: () => import("./components/DuplicatesCleanup")
     }
   ]

@@ -3,6 +3,11 @@
     <h4>ojbect</h4>
     <form>
       <table>
+        <tr>
+          {{
+            boxCheckedObjects
+          }}
+        </tr>
         <tr v-for="(value, key) in boxCheckedObject" v-bind:key="key">
           <label
             ><strong>{{ key }}</strong></label
@@ -33,12 +38,14 @@ import GenericRESTDataService from '../services/GenericRESTDataService';
 import config from '../config';
 
 export default {
+  props: ['boxCheckedObjects'],
   name: 'boxCheckedObject',
   data() {
     return {
       boxCheckedObject: [],
       message: '',
       index: 0,
+
     };
   },
   methods: {
@@ -80,7 +87,7 @@ export default {
   mounted() {
     console.log("TEST WORLD");
     this.message = '';
-    this.getObjectById(this.$route.params.id);
+    //this.getObjectById(this.$route.params.id);
 
 
   }
