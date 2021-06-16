@@ -2,39 +2,24 @@
   <div class="list row">
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search by Id"
-          v-model="searchedId"
-        />
+        <input type="text" class="form-control" placeholder="Search by Id" v-model="searchedId" />
         <div class="input-group-append"></div>
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          @click="searchId"
-        >
+        <button class="btn btn-outline-secondary" type="button" @click="searchId">
           Search
         </button>
         <tr>
-          <!-- <button
-            class="btn btn-success"
-            to="/duplicatesCleanup"
-            :disabled="boxCheckedObjects.length <= 1"
-            @click="duplicatesCleanup()"
-          >
+          <button class="btn btn-success" @click="duplicatesCleanup()" :disabled="boxCheckedObjects.length <= 1">
             Duplicates Cleanup
-          </button> -->
+          </button>
 
-          <router-link
+          <!-- <router-link
             tag="button"
             class="btn btn-success"
-            to="/duplicatesCleanup"
+            :to="'/duplicatesCleanup?data=' + JSON.stringify(boxCheckedObjects.map(o => o.id))"
             :disabled="boxCheckedObjects.length <= 1"
-            @click="setBoxCheckedJsonObject(jsonObject, index)"
           >
             Duplicates Cleanup
-          </router-link>
+          </router-link> -->
         </tr>
       </div>
     </div>
@@ -42,6 +27,7 @@
     <div class="col-md-6">
       <h4>List</h4>
       <ul class="list-group">
+        <p>name: {{ boxCheckedObjects }}</p>
         <li
           class="list-group-item"
           :class="{ active: index == currentIndex }"
@@ -55,10 +41,7 @@
                 type="checkbox"
                 v-model="boxCheckedObjects"
                 :value="jsonObject"
-                :disabled="
-                  boxCheckedObjects.length >= 2 &&
-                  boxCheckedObjects.indexOf(jsonObject) === -1
-                "
+                :disabled="boxCheckedObjects.length >= 2 && boxCheckedObjects.indexOf(jsonObject) === -1"
               />
             </th>
             <th>ID:</th>
@@ -96,11 +79,7 @@
           </table>
         </div>
         <tr>
-          <a
-            class="badge badge-danger mr-2"
-            :href="'/objects/' + currentJsonObject.id"
-            >Edit</a
-          >
+          <a class="badge badge-danger mr-2" :href="'/objects/' + currentJsonObject.id">Edit</a>
         </tr>
       </div>
 
@@ -140,11 +119,10 @@ export default {
       currentJsonObject: null,
       currentIndex: -1,
 
-
       boxCheckedObject: null,
       boxCheckedIndex: -1,
 
-      //boxCheckedObjects: [],
+      boxCheckedObjects: [],
       // Here saved the checked Books
     };
   },
@@ -166,11 +144,11 @@ export default {
       this.currentJsonObject = jsonObject;
       this.currentIndex = index;
     },
-    setBoxCheckedJsonObject(jsonObject, index) {
+    /* setBoxCheckedJsonObject(jsonObject, index) {
       this.boxCheckedObject = jsonObject;
       this.boxCheckedIndex = index;
     },
-
+ */
     refreshList() {
       this.retrieveGenericRessource();
       this.currentObject = null;
@@ -192,11 +170,19 @@ export default {
     },
 
     duplicatesCleanup() {
+      //this.boxCheckedObjects = 'GO THERE';
+
+      this.$router.push({
+        name: 'duplicatesCleanup',
+        params: {
+          boxCheckedObjects: this.boxCheckedObjects, // or anything you want
+        },
+      });
       /* this.currentJsonObject = null;
       this.currentIndex = null;
       console.log(this.boxCheckedObjects)
-      console.log(this.jsonObjects) */
-    }
+      console.log(this.jsonObjects)*/
+    },
   },
 
   mounted() {
