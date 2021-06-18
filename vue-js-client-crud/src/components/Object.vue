@@ -3,11 +3,18 @@
     <h4>ojbect</h4>
     <form>
       <table>
-        <tr v-for="(value, key) in currentJsonObject" v-bind:key="key">
+        <tr
+          v-for="(value,
+          key) in currentJsonObject"
+          v-bind:key="key"
+        >
           <label
             ><strong>{{ key }}</strong></label
           >
-          <input type="text" v-model="currentJsonObject[key]" />
+          <input
+            type="text"
+            v-model="currentJsonObject[key]"
+          />
         </tr>
       </table>
     </form>
@@ -21,11 +28,18 @@
         </tr>
       </table> -->
 
-    <button class="badge badge-danger mr-2" @click="deleteObject">
+    <button
+      class="badge badge-danger mr-2"
+      @click="deleteObject"
+    >
       Delete
     </button>
 
-    <button type="submit" class="badge badge-success" @click="updateObject">
+    <button
+      type="submit"
+      class="badge badge-success"
+      @click="updateObject"
+    >
       Update
     </button>
     <p>{{ message }}</p>
@@ -54,7 +68,10 @@ export default {
     getObjectById(id) {
       GenericRESTDataService.get(id)
         .then(response => {
-          this.currentJsonObject = response.data[config.singleResourceName];
+          this.currentJsonObject =
+            response.data[
+              config.singleResourceName
+            ];
           console.log(this.currentJsonObject);
         })
         .catch(e => {
@@ -63,11 +80,15 @@ export default {
     },
 
     updateObject() {
-      console.log(this.currentJsonObject)
-      GenericRESTDataService.update(this.currentJsonObject.id, this.currentJsonObject)
+      console.log(this.currentJsonObject);
+      GenericRESTDataService.update(
+        this.currentJsonObject.id,
+        this.currentJsonObject
+      )
         .then(response => {
           console.log(response);
-          this.message = 'The Oject was updated successfully!';
+          this.message =
+            'The Oject was updated successfully!';
         })
         .catch(e => {
           console.log(e);
@@ -75,7 +96,9 @@ export default {
     },
 
     deleteObject() {
-      GenericRESTDataService.delete(this.currentJsonObject.id)
+      GenericRESTDataService.delete(
+        this.currentJsonObject.id
+      )
         .then(result => {
           console.log(result.data);
           this.$router.push({ name: 'objects' });

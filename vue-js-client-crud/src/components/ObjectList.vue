@@ -17,22 +17,46 @@
           Search
         </button>
         <tr>
-          <button
+          <!-- <button
             class="btn btn-success"
             @click="duplicatesCleanup()"
-            :disabled="boxCheckedObjects.length <= 1"
+            :disabled="
+              boxCheckedObjects.length <= 1
+            "
           >
             Duplicates Cleanup
-          </button>
 
-          <!-- <router-link
+
+            <router-link
             tag="button"
             class="btn btn-success"
-            :to="'/duplicatesCleanup?data=' + JSON.stringify(boxCheckedObjects.map(o => o.id))"
-            :disabled="boxCheckedObjects.length <= 1"
+            :to="
+              '/duplicatesCleanup?data=' +
+                JSON.stringify(boxCheckedObjects)
+            "
+            :disabled="
+              boxCheckedObjects.length <= 1
+            "
           >
             Duplicates Cleanup
-          </router-link> -->
+          </router-link>
+
+
+          </button> -->
+
+          <router-link
+            tag="button"
+            class="btn btn-success"
+            :to="{
+              name: 'duplicatesCleanup',
+              params: { boxCheckedObjects },
+            }"
+            :disabled="
+              boxCheckedObjects.length <= 1
+            "
+          >
+            Duplicates Cleanup
+          </router-link>
         </tr>
       </div>
     </div>
@@ -40,23 +64,30 @@
     <div class="col-md-6">
       <h4>List</h4>
       <ul class="list-group">
-        <p>name: {{ boxCheckedObjects }}</p>
+        <!-- <p>name: {{ boxCheckedObjects }}</p> -->
         <li
           class="list-group-item"
-          :class="{ active: index == currentIndex }"
-          v-for="(jsonObject, index) in jsonObjects"
+          :class="{
+            active: index == currentIndex,
+          }"
+          v-for="(jsonObject,
+          index) in jsonObjects"
           :key="index"
-          @click="setActiveJsonObject(jsonObject, index)"
+          @click="
+            setActiveJsonObject(jsonObject, index)
+          "
         >
           <label>
             <th>
               <input
                 type="checkbox"
                 v-model="boxCheckedObjects"
-                :value="jsonObject"
+                :value="jsonObject.id"
                 :disabled="
                   boxCheckedObjects.length >= 2 &&
-                  boxCheckedObjects.indexOf(jsonObject) === -1
+                    boxCheckedObjects.indexOf(
+                      jsonObject.id
+                    ) === -1
                 "
               />
             </th>
@@ -86,9 +117,15 @@
         <h4>Object</h4>
         <div>
           <table>
-            <tr v-for="(value, key) in currentJsonObject" v-bind:key="key">
+            <tr
+              v-for="(value,
+              key) in currentJsonObject"
+              v-bind:key="key"
+            >
               <label
-                ><strong>{{ key }} </strong></label
+                ><strong
+                  >{{ key }}
+                </strong></label
               >
               <td>{{ value }}</td>
             </tr>
@@ -97,7 +134,9 @@
         <tr>
           <a
             class="badge badge-danger mr-2"
-            :href="'/objects/' + currentJsonObject.id"
+            :href="
+              '/objects/' + currentJsonObject.id
+            "
             >Edit</a
           >
         </tr>
@@ -148,9 +187,11 @@ export default {
   },
   methods: {
     retrieveObjects() {
-      GenericRESTDataService.getAll().then(result => {
-        this.jsonObjects = result;
-      });
+      GenericRESTDataService.getAll().then(
+        result => {
+          this.jsonObjects = result;
+        }
+      );
 
       /* same to above
       .then(response => {
@@ -177,32 +218,40 @@ export default {
 
     searchId() {
       if (this.searchedId !== '') {
-        GenericRESTDataService.findById(this.searchedId).then(result => {
+        GenericRESTDataService.findById(
+          this.searchedId
+        ).then(result => {
           this.jsonObjects = result;
           this.searchedId = '';
         });
       } else {
         if (this.searchedID == null)
-          GenericRESTDataService.getAll().then(result => {
-            this.jsonObjects = result;
-          });
+          GenericRESTDataService.getAll().then(
+            result => {
+              this.jsonObjects = result;
+            }
+          );
       }
     },
 
-    duplicatesCleanup() {
+    /* duplicatesCleanup() {
       //this.boxCheckedObjects = 'GO THERE';
 
       this.$router.push({
         name: 'duplicatesCleanup',
         params: {
-          boxCheckedObjects: this.boxCheckedObjects, // or anything you want
+          boxCheckedObjects: this
+            .boxCheckedObjects,
         },
       });
-      /* this.currentJsonObject = null;
+      /*
+
+
+      this.currentJsonObject = null;
       this.currentIndex = null;
       console.log(this.boxCheckedObjects)
-      console.log(this.jsonObjects)*/
-    },
+      console.log(this.jsonObjects)
+    }, */
   },
 
   mounted() {

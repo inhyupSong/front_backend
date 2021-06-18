@@ -1,18 +1,22 @@
 //import axios from 'axios';
-import http from "../http-common";
+import http from '../http-common';
 //import config from process.env.VUE_APP_EXT_REST_CONFIG_1_dots; //"./config";
-import config from "../config";
+import config from '../config';
 
 class GenericRESTDataService {
   async getAll() {
-    const response = await http.get("/" + config.RessourceName);
+    const response = await http.get(
+      '/' + config.RessourceName
+    );
 
     return response.data[config.RessourceName];
   }
 
   async findById(id) {
     //TODO:  maket the function "Search by ID" work.
-    const response = await http.get(`/books/${id}`);
+    const response = await http.get(
+      `/books/${id}`
+    );
     //const response = await http.get('/books/1');
 
     /* return response.data */
@@ -31,11 +35,13 @@ class GenericRESTDataService {
     }); */
 
     const mapped = {};
-    Object.entries(response.data.book).forEach(([key, value]) => {
-      if (attrs.includes(key)) {
-        mapped[key] = value;
+    Object.entries(response.data.book).forEach(
+      ([key, value]) => {
+        if (attrs.includes(key)) {
+          mapped[key] = value;
+        }
       }
-    });
+    );
     return [mapped];
   }
 
@@ -46,9 +52,11 @@ class GenericRESTDataService {
     data[config.attribiutesTest.variable_4] = data.variable_4;
     data[config.attribiutesTest.variable_5] = data.variable_5; */
 
-    return http.post("/" + config.RessourceName, data).then(result => {
-      return result.data.id;
-    });
+    return http
+      .post('/' + config.RessourceName, data)
+      .then(result => {
+        return result.data.id;
+      });
     //return http.post("/books", data);
   }
 
