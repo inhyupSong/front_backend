@@ -1,41 +1,77 @@
 <template>
-  <div>
-    <h4>ojbect</h4>
-    <form>
-      <table>
-        <tr
-          v-for="(value,
-          key) in firstBoxCheckedObject"
-          v-bind:key="key"
-        >
-          <label
-            ><strong>{{ key }}</strong></label
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h4>Ojbecte 1</h4>
+        <table>
+          <tr
+            v-for="(value,
+            key) in firstBoxCheckedObject"
+            v-bind:key="key"
           >
-          <input
-            type="text"
-            v-model="firstBoxCheckedObject[key]"
-          />
-        </tr>
-      </table>
+            <label
+              ><strong>{{ key }}</strong></label
+            >
+            <input
+              type="text"
+              v-model="firstBoxCheckedObject[key]"
+            />
+          </tr>
+        </table>
 
-      <table>
-        <tr
-          v-for="(value,
-          key) in secondBoxCheckedObject"
-          v-bind:key="key"
+        <button
+          class="badge badge-danger mr-2"
+          @click="deleteObjectFirst"
         >
-          <label
-            ><strong>{{ key }}</strong></label
-          >
-          <input
-            type="text"
-            v-model="secondBoxCheckedObject[key]"
-          />
-        </tr>
-      </table>
-    </form>
+          Delete
+        </button>
 
-    <!--  <button
+        <button
+          type="submit"
+          class="badge badge-success"
+          @click="updateObjectFirst"
+        >
+          Update
+        </button>
+      </div>
+
+      <div class="col">
+        <h4>Ojbecte 2</h4>
+        <table>
+          <tr
+            v-for="(value,
+            key) in secondBoxCheckedObject"
+            v-bind:key="key"
+          >
+            <label
+              ><strong>{{ key }}</strong></label
+            >
+            <input
+              type="text"
+              v-model="
+                secondBoxCheckedObject[key]
+              "
+            />
+          </tr>
+        </table>
+
+        <button
+          class="badge badge-danger mr-2"
+          @click="deleteObjectSecond"
+        >
+          Delete
+        </button>
+
+        <button
+          type="submit"
+          class="badge badge-success"
+          @click="updateObjectSecond"
+        >
+          Update
+        </button>
+      </div>
+
+      <!--  <button
       class="badge badge-danger mr-2"
       @click="deleteObject"
     >
@@ -50,8 +86,8 @@
       Update
     </button>
     <p>{{ message }}</p> -->
+    </div>
   </div>
-
   <!--   <div v-else>
     <br />
     <p>Please click on a Tutorial...</p>
@@ -108,11 +144,11 @@ export default {
         });
     },
 
-    /* updateObject() {
-      console.log(this.boxCheckedObject);
+    updateObjectFirst() {
+      console.log(this.firstBoxCheckedObject);
       GenericRESTDataService.update(
-        this.boxCheckedObject.id,
-        this.boxCheckedObject
+        this.firstBoxCheckedObject.id,
+        this.firstBoxCheckedObject
       )
         .then(response => {
           console.log(response);
@@ -124,19 +160,49 @@ export default {
         });
     },
 
-    deleteObject() {
+    deleteObjectFirst() {
       GenericRESTDataService.delete(
-        this.boxCheckedObject.id
+        this.firstBoxCheckedObject.id
       )
         .then(result => {
           console.log(result.data);
           this.$router.push({ name: 'objects' });
-          this.retrieveBooks();
+          //this.retrieveBooks();
         })
         .catch(e => {
           console.log(e);
         });
-    }, */
+    },
+
+    updateObjectSecond() {
+      console.log(this.secondBoxCheckedObject);
+      GenericRESTDataService.update(
+        this.secondBoxCheckedObject.id,
+        this.secondBoxCheckedObject
+      )
+        .then(response => {
+          console.log(response);
+          this.message =
+            'The Oject was updated successfully!';
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
+    deleteObjectSecond() {
+      GenericRESTDataService.delete(
+        this.secondBoxCheckedObject.id
+      )
+        .then(result => {
+          console.log(result.data);
+          this.$router.push({ name: 'objects' });
+          //this.retrieveBooks();
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
   },
   mounted() {
     this.getObjectById_first(this.firstObjectId);
