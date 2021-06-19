@@ -51,9 +51,7 @@
               name: 'duplicatesCleanup',
               params: { boxCheckedObjects },
             }"
-            :disabled="
-              boxCheckedObjects.length <= 1
-            "
+            :disabled="boxCheckedObjects.length <= 1"
           >
             Duplicates Cleanup
           </router-link>
@@ -70,12 +68,9 @@
           :class="{
             active: index == currentIndex,
           }"
-          v-for="(jsonObject,
-          index) in jsonObjects"
+          v-for="(jsonObject, index) in jsonObjects"
           :key="index"
-          @click="
-            setActiveJsonObject(jsonObject, index)
-          "
+          @click="setActiveJsonObject(jsonObject, index)"
         >
           <label>
             <th>
@@ -85,9 +80,7 @@
                 :value="jsonObject.id"
                 :disabled="
                   boxCheckedObjects.length >= 2 &&
-                    boxCheckedObjects.indexOf(
-                      jsonObject.id
-                    ) === -1
+                  boxCheckedObjects.indexOf(jsonObject.id) === -1
                 "
               />
             </th>
@@ -117,15 +110,9 @@
         <h4>Object</h4>
         <div>
           <table>
-            <tr
-              v-for="(value,
-              key) in currentJsonObject"
-              v-bind:key="key"
-            >
+            <tr v-for="(value, key) in currentJsonObject" v-bind:key="key">
               <label
-                ><strong
-                  >{{ key }}
-                </strong></label
+                ><strong>{{ key }} </strong></label
               >
               <td>{{ value }}</td>
             </tr>
@@ -134,9 +121,7 @@
         <tr>
           <a
             class="badge badge-danger mr-2"
-            :href="
-              '/objects/' + currentJsonObject.id
-            "
+            :href="'/objects/' + currentJsonObject.id"
             >Edit</a
           >
         </tr>

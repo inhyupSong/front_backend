@@ -4,24 +4,22 @@
       <div class="col">
         <h4>Ojbecte 1</h4>
         <table>
-          <tr
-            v-for="(value,
-            key) in firstBoxCheckedObject"
-            v-bind:key="key"
-          >
+          <tr v-for="(value, key) in firstBoxCheckedObject" v-bind:key="key">
             <label
               ><strong>{{ key }}</strong></label
             >
             <input
               type="text"
               v-model="firstBoxCheckedObject[key]"
+              :disabled="isActiveFirst"
             />
           </tr>
         </table>
-
+        <!-- ============================================================================ -->
         <button
           class="badge badge-danger mr-2"
-          @click="deleteObjectFirst"
+          @click="deleteObjectFirst()"
+          :disabled="buttonDisableFirst"
         >
           Delete
         </button>
@@ -29,35 +27,34 @@
         <button
           type="submit"
           class="badge badge-success"
-          @click="updateObjectFirst"
+          @click="updateObjectFirst()"
+          v-on:click="comfirmAlert('Updated')"
+          :disabled="buttonDisableFirst"
         >
           Update
         </button>
+        <!-- ============================================================================ -->
       </div>
 
       <div class="col">
         <h4>Ojbecte 2</h4>
         <table>
-          <tr
-            v-for="(value,
-            key) in secondBoxCheckedObject"
-            v-bind:key="key"
-          >
+          <tr v-for="(value, key) in secondBoxCheckedObject" v-bind:key="key">
             <label
               ><strong>{{ key }}</strong></label
             >
             <input
               type="text"
-              v-model="
-                secondBoxCheckedObject[key]
-              "
+              v-model="secondBoxCheckedObject[key]"
+              :disabled="isActiveSecond"
             />
           </tr>
         </table>
-
+        <!-- ============================================================================ -->
         <button
           class="badge badge-danger mr-2"
-          @click="deleteObjectSecond"
+          @click="deleteObjectSecond()"
+          :disabled="buttonDisableSecond"
         >
           Delete
         </button>
@@ -66,33 +63,18 @@
           type="submit"
           class="badge badge-success"
           @click="updateObjectSecond"
+          v-on:click="comfirmAlert('Updated')"
+          :disabled="buttonDisableSecond"
         >
           Update
         </button>
+        <!-- ============================================================================ -->
       </div>
-
-      <!--  <button
-      class="badge badge-danger mr-2"
-      @click="deleteObject"
-    >
-      Delete
-    </button>
-
-    <button
-      type="submit"
-      class="badge badge-success"
-      @click="updateObject"
-    >
-      Update
-    </button>
-    <p>{{ message }}</p> -->
     </div>
   </div>
-  <!--   <div v-else>
-    <br />
-    <p>Please click on a Tutorial...</p>
-  </div> -->
 </template>
+
+
 
 <script>
 import GenericRESTDataService from '../services/GenericRESTDataService';
@@ -100,7 +82,6 @@ import config from '../config';
 
 export default {
   props: ['boxCheckedObjects'],
-
   name: 'boxCheckedObject',
   data() {
     return {
@@ -108,8 +89,15 @@ export default {
       index: 0,
       firstBoxCheckedObject: null,
       secondBoxCheckedObject: null,
+
       firstObjectId: this.boxCheckedObjects[0],
       secondObjectId: this.boxCheckedObjects[1],
+
+      isActiveFirst: false,
+      isActiveSecond: false,
+
+      buttonDisableFirst: false,
+      buttonDisableSecond: false
     };
   },
 
@@ -119,7 +107,7 @@ export default {
         .then(response => {
           this.firstBoxCheckedObject =
             response.data[
-              config.singleResourceName
+            config.singleResourceName
             ];
           console.log(this.firstBoxCheckedObject);
         })
@@ -133,7 +121,7 @@ export default {
         .then(response => {
           this.secondBoxCheckedObject =
             response.data[
-              config.singleResourceName
+            config.singleResourceName
             ];
           console.log(
             this.secondBoxCheckedObject
@@ -142,6 +130,10 @@ export default {
         .catch(e => {
           console.log(e);
         });
+    },
+
+    comfirmAlert: function (message) {
+      alert(message)
     },
 
     updateObjectFirst() {
@@ -161,17 +153,20 @@ export default {
     },
 
     deleteObjectFirst() {
-      GenericRESTDataService.delete(
-        this.firstBoxCheckedObject.id
-      )
-        .then(result => {
-          console.log(result.data);
-          this.$router.push({ name: 'objects' });
-          //this.retrieveBooks();
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      if (confirm("Do you really want to delete?")) {
+        GenericRESTDataService.delete(
+          this.firstBoxCheckedObject.id
+        )
+          .then(result => {
+            console.log(result.data);
+            //this.$router.push({ name: 'objects' });
+          })
+          .catch(e => {
+            console.log(e);
+          });
+        this.isActiveFirst = true
+        this.buttonDisableFirst = true
+      }
     },
 
     updateObjectSecond() {
@@ -189,20 +184,22 @@ export default {
           console.log(e);
         });
     },
-
+    /* ============================================================ */
     deleteObjectSecond() {
-      GenericRESTDataService.delete(
-        this.secondBoxCheckedObject.id
-      )
-        .then(result => {
-          console.log(result.data);
-          this.$router.push({ name: 'objects' });
-          //this.retrieveBooks();
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      if (confirm("Do you really want to delete?")) {
+        GenericRESTDataService.delete(
+          this.secondBoxCheckedObject.id
+        )
+          .then(result => { console.log(result.data) })
+          .catch(e => {
+            console.log(e);
+          });
+        this.isActiveSecond = true
+        this.buttonDisableSecond = true
+      }
     },
+
+    /* ============================================================ */
   },
   mounted() {
     this.getObjectById_first(this.firstObjectId);
@@ -211,61 +208,6 @@ export default {
     );
   },
 };
-/* import GenericRESTDataService from '../services/GenericRESTDataService';
-import config from '../config';
-
-export default {
-  name: 'jsonObject',
-  data() {
-    return {
-      currentJsonObject: null,
-      message: '',
-      index: 0,
-    };
-  },
-  methods: {
-    getObjectById(id) {
-      GenericRESTDataService.get(id)
-        .then(response => {
-          this.currentJsonObject = response.data[config.singleResourceName];
-          console.log(this.currentJsonObject);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-    updateObject() {
-      console.log(this.currentJsonObject)
-      GenericRESTDataService.update(this.currentJsonObject.id, this.currentJsonObject)
-        .then(response => {
-          console.log(response);
-          this.message = 'The Oject was updated successfully!';
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-    deleteObject() {
-      GenericRESTDataService.delete(this.currentJsonObject.id)
-        .then(result => {
-          console.log(result.data);
-          this.$router.push({ name: 'objects' });
-          this.retrieveBooks();
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-  },
-  mounted() {
-    console.log("TEST WORLD")
-    this.message = '';
-    this.getObjectById(this.$route.params.id);
-    //console.log(currentJsonObject.value);
-  },
-}; */
 </script>
 
 <style>
