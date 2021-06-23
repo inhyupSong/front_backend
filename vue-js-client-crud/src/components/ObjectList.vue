@@ -17,22 +17,20 @@
           Search
         </button>
         <tr>
-          <!-- <button
+          <!--      <button
             class="btn btn-success"
             @click="duplicatesCleanup()"
             :disabled="
               boxCheckedObjects.length <= 1
             "
           >
-            Duplicates Cleanup
+            Duplicates Cleanup -->
 
-
-            <router-link
+          <router-link
             tag="button"
             class="btn btn-success"
             :to="
-              '/duplicatesCleanup?data=' +
-                JSON.stringify(boxCheckedObjects)
+              `/duplicatesCleanup?id1=${boxCheckedObjects[0]}&id2=${boxCheckedObjects[1]}`
             "
             :disabled="
               boxCheckedObjects.length <= 1
@@ -40,11 +38,9 @@
           >
             Duplicates Cleanup
           </router-link>
+          <!-- </button> -->
 
-
-          </button> -->
-
-          <router-link
+          <!-- <router-link
             tag="button"
             class="btn btn-success"
             :to="{
@@ -54,7 +50,7 @@
             :disabled="boxCheckedObjects.length <= 1"
           >
             Duplicates Cleanup
-          </router-link>
+          </router-link> -->
         </tr>
       </div>
     </div>
@@ -68,9 +64,12 @@
           :class="{
             active: index == currentIndex,
           }"
-          v-for="(jsonObject, index) in jsonObjects"
+          v-for="(jsonObject,
+          index) in jsonObjects"
           :key="index"
-          @click="setActiveJsonObject(jsonObject, index)"
+          @click="
+            setActiveJsonObject(jsonObject, index)
+          "
         >
           <label>
             <th>
@@ -80,7 +79,9 @@
                 :value="jsonObject.id"
                 :disabled="
                   boxCheckedObjects.length >= 2 &&
-                  boxCheckedObjects.indexOf(jsonObject.id) === -1
+                    boxCheckedObjects.indexOf(
+                      jsonObject.id
+                    ) === -1
                 "
               />
             </th>
@@ -110,9 +111,15 @@
         <h4>Object</h4>
         <div>
           <table>
-            <tr v-for="(value, key) in currentJsonObject" v-bind:key="key">
+            <tr
+              v-for="(value,
+              key) in currentJsonObject"
+              v-bind:key="key"
+            >
               <label
-                ><strong>{{ key }} </strong></label
+                ><strong
+                  >{{ key }}
+                </strong></label
               >
               <td>{{ value }}</td>
             </tr>
@@ -121,7 +128,9 @@
         <tr>
           <a
             class="badge badge-danger mr-2"
-            :href="'/objects/' + currentJsonObject.id"
+            :href="
+              '/objects/' + currentJsonObject.id
+            "
             >Edit</a
           >
         </tr>

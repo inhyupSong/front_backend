@@ -1,211 +1,141 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col">
-        <h4>Ojbecte 1</h4>
+      <div
+        class="col"
+        v-for="(obj, i) in objects"
+        v-bind:key="i"
+      >
+        <h4>
+          Object {{ i
+          }}<span v-if="isDisabled[i]">
+            (deleted)</span
+          >
+        </h4>
         <table>
-          <tr v-for="(value, key) in firstBoxCheckedObject" v-bind:key="key">
-            <label
-              ><strong>{{ key }}</strong></label
+          <tr
+            v-for="(value, key) in obj"
+            v-bind:key="key"
+          >
+            <td
+              v-bind:style="{
+                textAlign: 'left',
+                paddingRight: '1em',
+              }"
             >
-            <input
-              type="text"
-              v-model="firstBoxCheckedObject[key]"
-              :disabled="isActiveFirst"
-            />
+              <label
+                ><strong>{{ key }}</strong></label
+              >
+            </td>
+            <td>
+              <input
+                type="text"
+                v-model="obj[key]"
+                :disabled="
+                  key === 'id' || isDisabled[i]
+                "
+                @change="updateObject(i)"
+              />
+            </td>
           </tr>
         </table>
-        <!-- ============================================================================ -->
-        <button
-          class="badge badge-danger mr-2"
-          @click="deleteObjectFirst()"
-          :disabled="buttonDisableFirst"
-        >
-          Delete
-        </button>
 
         <button
-          type="submit"
-          class="badge badge-success"
-          @click="updateObjectFirst()"
-          v-on:click="comfirmAlert('Updated')"
-          :disabled="buttonDisableFirst"
+          :class="
+            'badge ' +
+              (isDisabled[Math.abs(i - 1)]
+                ? 'badge-success'
+                : 'badge-danger')
+          "
+          @click="deleteObject(i)"
+          v-if="!isDisabled[i]"
+          :disabled="isDisabled[Math.abs(i - 1)]"
         >
-          Update
+          {{
+            isDisabled[Math.abs(i - 1)]
+              ? 'KEPT'
+              : 'DELETE'
+          }}
         </button>
-        <!-- ============================================================================ -->
-      </div>
-
-      <div class="col">
-        <h4>Ojbecte 2</h4>
-        <table>
-          <tr v-for="(value, key) in secondBoxCheckedObject" v-bind:key="key">
-            <label
-              ><strong>{{ key }}</strong></label
-            >
-            <input
-              type="text"
-              v-model="secondBoxCheckedObject[key]"
-              :disabled="isActiveSecond"
-            />
-          </tr>
-        </table>
-        <!-- ============================================================================ -->
-        <button
-          class="badge badge-danger mr-2"
-          @click="deleteObjectSecond()"
-          :disabled="buttonDisableSecond"
-        >
-          Delete
-        </button>
-
-        <button
-          type="submit"
-          class="badge badge-success"
-          @click="updateObjectSecond"
-          v-on:click="comfirmAlert('Updated')"
-          :disabled="buttonDisableSecond"
-        >
-          Update
-        </button>
-        <!-- ============================================================================ -->
       </div>
     </div>
   </div>
 </template>
 
-
-
 <script>
 import GenericRESTDataService from '../services/GenericRESTDataService';
 import config from '../config';
+import Vue from 'vue';
 
 export default {
   props: ['boxCheckedObjects'],
   name: 'boxCheckedObject',
   data() {
     return {
-      message: '',
-      index: 0,
-      firstBoxCheckedObject: null,
-      secondBoxCheckedObject: null,
-
-      firstObjectId: this.boxCheckedObjects[0],
-      secondObjectId: this.boxCheckedObjects[1],
-
-      isActiveFirst: false,
-      isActiveSecond: false,
-
-      buttonDisableFirst: false,
-      buttonDisableSecond: false
+      objects: [null, null],
+      isDisabled: [false, false],
     };
   },
 
   methods: {
-    getObjectById_first(id) {
+    getObjectById(i, id) {
       GenericRESTDataService.get(id)
         .then(response => {
-          this.firstBoxCheckedObject =
+          Vue.set(
+            this.objects,
+            i,
             response.data[
-            config.singleResourceName
-            ];
-          console.log(this.firstBoxCheckedObject);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-    getObjectById_second(id) {
-      GenericRESTDataService.get(id)
-        .then(response => {
-          this.secondBoxCheckedObject =
-            response.data[
-            config.singleResourceName
-            ];
-          console.log(
-            this.secondBoxCheckedObject
+              config.singleResourceName
+            ]
           );
+          console.log(this.objects[i]);
         })
         .catch(e => {
           console.log(e);
         });
     },
 
-    comfirmAlert: function (message) {
-      alert(message)
+    comfirmAlert: function(message) {
+      alert(message);
     },
 
-    updateObjectFirst() {
-      console.log(this.firstBoxCheckedObject);
+    updateObject(i) {
+      console.log(this.objects[i]);
       GenericRESTDataService.update(
-        this.firstBoxCheckedObject.id,
-        this.firstBoxCheckedObject
+        this.objects[i].id,
+        this.objects[i]
       )
         .then(response => {
           console.log(response);
-          this.message =
-            'The Oject was updated successfully!';
         })
         .catch(e => {
           console.log(e);
         });
     },
 
-    deleteObjectFirst() {
-      if (confirm("Do you really want to delete?")) {
+    deleteObject(i) {
+      if (
+        confirm('Do you really want to delete?')
+      ) {
         GenericRESTDataService.delete(
-          this.firstBoxCheckedObject.id
+          this.objects[i].id
         )
           .then(result => {
             console.log(result.data);
+            Vue.set(this.isDisabled, i, true);
             //this.$router.push({ name: 'objects' });
           })
           .catch(e => {
             console.log(e);
           });
-        this.isActiveFirst = true
-        this.buttonDisableFirst = true
-      }
-    },
-
-    updateObjectSecond() {
-      console.log(this.secondBoxCheckedObject);
-      GenericRESTDataService.update(
-        this.secondBoxCheckedObject.id,
-        this.secondBoxCheckedObject
-      )
-        .then(response => {
-          console.log(response);
-          this.message =
-            'The Oject was updated successfully!';
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    /* ============================================================ */
-    deleteObjectSecond() {
-      if (confirm("Do you really want to delete?")) {
-        GenericRESTDataService.delete(
-          this.secondBoxCheckedObject.id
-        )
-          .then(result => { console.log(result.data) })
-          .catch(e => {
-            console.log(e);
-          });
-        this.isActiveSecond = true
-        this.buttonDisableSecond = true
       }
     },
 
     /* ============================================================ */
   },
   mounted() {
-    this.getObjectById_first(this.firstObjectId);
-    this.getObjectById_second(
-      this.secondObjectId
-    );
+    this.getObjectById(0, this.$route.query.id1);
+    this.getObjectById(1, this.$route.query.id2);
   },
 };
 </script>

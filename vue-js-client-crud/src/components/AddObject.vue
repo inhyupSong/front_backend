@@ -1,38 +1,67 @@
 <template>
   <div class="submit-form">
-    <header>
-      <h1>Add Book</h1>
-    </header>
+    <div class="row">
+      <header>
+        <h1>Add Book</h1>
+      </header>
 
-    <div class="field-table">
-      <div v-if="!submitted">
-        <table>
-          <tr v-for="(value, key) in genericObject" v-bind:key="key">
+      <div class="field-table">
+        <div v-if="!submitted">
+          <table>
             <div v-if="value !== null">
-              <label
-                ><strong>{{ key }}</strong></label
+              <tr
+                v-for="(value,
+                key) in genericObject"
+                v-bind:key="key"
               >
-              <td>
-                <input
-                  type="text"
-                  class="form-control"
-                  required
-                  v-model="genericObject[key]"
-                />
-              </td>
+                <td
+                  v-bind:style="{
+                    textAlign: 'left',
+                    paddingRight: '1em',
+                  }"
+                >
+                  <label
+                    ><strong>{{
+                      key
+                    }}</strong></label
+                  >
+                </td>
+
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    required
+                    v-model="genericObject[key]"
+                    v-bind:style="{
+                      textAlign: 'right',
+                    }"
+                  />
+                </td>
+              </tr>
             </div>
-          </tr>
-        </table>
+          </table>
 
-        <br /><br />
-        <div id="submit-button">
-          <button @click="saveBook" class="btn btn-success">Submit</button>
+          <br /><br />
+          <div id="submit-button">
+            <button
+              @click="saveBook"
+              class="btn btn-success"
+            >
+              Submit
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div v-else>
-        <h4>You submitted successfully!</h4>
-        <button class="btn btn-success" @click="newBook">Add</button>
+        <div v-else>
+          <h4>You submitted successfully!</h4>
+          <button
+            class="btn btn-success"
+            @click="newBook"
+          >
+            Add
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -51,8 +80,9 @@ export default {
   },
   methods: {
     saveBook() {
-
-      GenericRESTDataService.create(this.genericObject)
+      GenericRESTDataService.create(
+        this.genericObject
+      )
         .then(result => {
           this.genericObject.id = result;
           this.submitted = true;
@@ -71,12 +101,14 @@ export default {
     },
 
     getAttributeByKey(key) {
-      return config.attribiutesTest[key]
+      return config.attribiutesTest[key];
     },
 
     newBook() {
       this.submitted = false;
-      this.genericObject = { ...config.newEntity };
+      this.genericObject = {
+        ...config.newEntity,
+      };
     },
   },
 };
@@ -90,10 +122,10 @@ export default {
 
 .field-table {
   margin-top: 3rem;
-  margin-left: 10rem;
+  margin-left: 17rem;
 }
 
 #submit-button {
-  margin-right: 160px;
+  margin-right: 350px;
 }
 </style>
