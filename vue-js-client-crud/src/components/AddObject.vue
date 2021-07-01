@@ -2,17 +2,21 @@
   <div class="submit-form">
     <div class="row">
       <header>
-        <h1>Add Book</h1>
+        <h1>Add Object</h1>
       </header>
 
       <div class="field-table">
         <div v-if="!submitted">
           <table>
-            <div v-if="value !== null">
+            <div
+              :style="{ marginLeft: '15em' }"
+              v-if="value !== null"
+            >
               <tr
                 v-for="(value,
                 key) in genericObject"
                 v-bind:key="key"
+                :hidden="key === 'id'"
               >
                 <td
                   v-bind:style="{
@@ -22,11 +26,13 @@
                 >
                   <label
                     ><strong>{{
-                      key
+                      key | capitalize
                     }}</strong></label
                   >
                 </td>
 
+                <!-- for input, need only number 
+                @keypress="isNumber($event)" -->
                 <td>
                   <input
                     type="text"
@@ -34,7 +40,7 @@
                     required
                     v-model="genericObject[key]"
                     v-bind:style="{
-                      textAlign: 'right',
+                      textAlign: 'left',
                     }"
                   />
                 </td>
@@ -43,9 +49,12 @@
           </table>
 
           <br /><br />
-          <div id="submit-button">
+          <div
+            :style="{ marginLeft: '15em' }"
+            id="submit-button"
+          >
             <button
-              @click="saveBook"
+              @click="saveObject"
               class="btn btn-success"
             >
               Submit
@@ -56,11 +65,20 @@
         <div v-else>
           <h4>You submitted successfully!</h4>
           <button
+            :style="{ margin: '2em' }"
             class="btn btn-success"
-            @click="newBook"
+            @click="newObject"
           >
-            Add
+            Add one More Object
           </button>
+          <router-link
+            :style="{ margin: '2em' }"
+            tag="button"
+            class="btn btn-dark"
+            to="/objects"
+          >
+            Back to List
+          </router-link>
         </div>
       </div>
     </div>
@@ -79,7 +97,7 @@ export default {
     };
   },
   methods: {
-    saveBook() {
+    saveObject() {
       GenericRESTDataService.create(
         this.genericObject
       )
@@ -104,7 +122,23 @@ export default {
       return config.attribiutesTest[key];
     },
 
-    newBook() {
+    isNumber: function(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which
+        ? evt.which
+        : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
+
+    newObject() {
       this.submitted = false;
       this.genericObject = {
         ...config.newEntity,
@@ -122,7 +156,7 @@ export default {
 
 .field-table {
   margin-top: 3rem;
-  margin-left: 17rem;
+  margin-left: 1rem;
 }
 
 #submit-button {

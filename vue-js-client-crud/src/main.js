@@ -1,6 +1,11 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
+import filters from './filters';
+
+/* only number */
+import onlyInt from 'vue-input-only-number';
+Vue.use(onlyInt);
 
 /* BootstrapVue */
 import { BootstrapVue } from 'bootstrap-vue';
@@ -32,6 +37,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 new Vue({
+  filters,
   router,
   render: h => h(App),
 }).$mount('#app');

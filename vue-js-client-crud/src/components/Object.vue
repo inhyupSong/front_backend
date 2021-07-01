@@ -1,25 +1,39 @@
 <template>
   <div v-if="currentJsonObject" class="edit-form">
-    <h4>ojbect</h4>
-    <form>
-      <table>
-        <tr
-          v-for="(value,
-          key) in currentJsonObject"
-          v-bind:key="key"
-        >
-          <label
-            ><strong>{{ key }}</strong></label
-          >
-          <input
-            type="text"
-            v-model="currentJsonObject[key]"
-          />
-        </tr>
-      </table>
-    </form>
+    <div class="row">
+      <header><h1>Object Edit</h1></header>
+      <div class="field-table">
+        <form>
+          <table>
+            <tr
+              v-for="(value,
+              key) in currentJsonObject"
+              :key="key"
+            >
+              <td
+                :style="{
+                  textAlign: 'left',
+                  paddingRight: '1em',
+                }"
+              >
+                <label
+                  ><strong>{{
+                    key | capitalize
+                  }}</strong></label
+                >
+              </td>
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="currentJsonObject[key]"
+                />
+              </td>
+            </tr>
+          </table>
+        </form>
 
-    <!-- <table>
+        <!-- <table>
         <tr v-for="(value, key) in currentJsonObject" v-bind:key="key">
           <label
             ><strong>{{ key }}</strong></label
@@ -27,22 +41,29 @@
           <td>{{ value }}</td>
         </tr>
       </table> -->
+        <div class="button-area">
+          <p>
+            Update confirmed: {{ message }} +
+            {{ counter }}
+          </p>
+          <button
+            class="badge badge-danger mr-2"
+            @click="deleteObject"
+          >
+            Delete
+          </button>
 
-    <button
-      class="badge badge-danger mr-2"
-      @click="deleteObject"
-    >
-      Delete
-    </button>
-
-    <button
-      type="submit"
-      class="badge badge-success"
-      @click="updateObject"
-    >
-      Update
-    </button>
-    <p>{{ message }}</p>
+          <button
+            type="submit"
+            class="badge badge-success"
+            v-on:click="counter += 1"
+            @click="updateObject"
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div v-else>
@@ -62,6 +83,7 @@ export default {
       currentJsonObject: null,
       message: '',
       index: 0,
+      counter: 0,
     };
   },
   methods: {
@@ -87,8 +109,7 @@ export default {
       )
         .then(response => {
           console.log(response);
-          this.message =
-            'The Oject was updated successfully!';
+          this.message = 'Update';
         })
         .catch(e => {
           console.log(e);
@@ -96,19 +117,30 @@ export default {
     },
 
     deleteObject() {
-      GenericRESTDataService.delete(
-        this.currentJsonObject.id
+      if (
+        confirm(
+          'Attention! \nDo you really want to delete? \nThis Object will be deleted permanently.'
+        )
       )
-        .then(result => {
-          console.log(result.data);
-          this.$router.push({ name: 'objects' });
-          this.retrieveBooks();
-        })
-        .catch(e => {
-          console.log(e);
-        });
+        GenericRESTDataService.delete(
+          this.currentJsonObject.id
+        )
+          .then(result => {
+            console.log(result.data);
+            this.$router.push({
+              name: 'objects',
+            });
+            this.retrieveObjects();
+          })
+          .catch(e => {
+            console.log(e);
+          });
+    },
+    comfirmAlert: function(message) {
+      alert(message);
     },
   },
+
   mounted() {
     this.message = '';
     this.getObjectById(this.$route.params.id);
@@ -121,5 +153,13 @@ export default {
 .edit-form {
   max-width: 300px;
   margin: auto;
+}
+
+.button-area {
+  margin-top: 2em;
+}
+.field-table {
+  margin-top: 3rem;
+  margin-left: 1rem;
 }
 </style>

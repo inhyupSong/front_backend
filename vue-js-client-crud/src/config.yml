@@ -1,15 +1,16 @@
 URI: http://localhost:5001
 RessourceName: books
-#Attributes must have a an id!
+#Attributes must have a an id! - 'id' is directly used in many functions
 singleResourceName: book
 attrbiutes:
-  - id
-  - title
-  - abstract
-  - author
-  - length
-  - rating
+  - id: int
+  - title: text
+  - abstract: long
+  - author: text
+  - length: int
+  - rating: float
 
+#It need for the "ADD Object"
 newEntity:
   id: null
   title: ''

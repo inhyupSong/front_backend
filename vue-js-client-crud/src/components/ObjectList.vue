@@ -73,17 +73,25 @@
         >
           <label>
             <th>
-              <input
-                type="checkbox"
-                v-model="boxCheckedObjects"
-                :value="jsonObject.id"
-                :disabled="
-                  boxCheckedObjects.length >= 2 &&
-                    boxCheckedObjects.indexOf(
-                      jsonObject.id
-                    ) === -1
-                "
-              />
+              <span
+                v-bind:style="{
+                  textAlign: 'left',
+                  paddingRight: '1em',
+                }"
+              >
+                <input
+                  type="checkbox"
+                  v-model="boxCheckedObjects"
+                  :value="jsonObject.id"
+                  :disabled="
+                    boxCheckedObjects.length >=
+                      2 &&
+                      boxCheckedObjects.indexOf(
+                        jsonObject.id
+                      ) === -1
+                  "
+                />
+              </span>
             </th>
             <th>ID:</th>
             <td>{{ jsonObject.id }}</td>
@@ -110,29 +118,45 @@
       <div v-if="currentJsonObject">
         <h4>Object</h4>
         <div>
-          <table>
+          <table
+            class="list-group-item"
+            v-bind:style="{
+              width: '40em',
+              marginBottom: '1em',
+            }"
+          >
             <tr
               v-for="(value,
               key) in currentJsonObject"
               v-bind:key="key"
             >
               <label
+                class="list-item"
+                v-bind:style="{
+                  textAlign: 'left',
+                  paddingRight: '2em',
+                  boder: '1px',
+                }"
                 ><strong
-                  >{{ key }}
+                  >{{ key | capitalize }}
                 </strong></label
               >
-              <td>{{ value }}</td>
+              <td>
+                {{ value }}
+              </td>
             </tr>
           </table>
         </div>
         <tr>
-          <a
-            class="badge badge-danger mr-2"
-            :href="
-              '/objects/' + currentJsonObject.id
-            "
-            >Edit</a
-          >
+          <h5>
+            <a
+              class="badge badge-warning mr-2"
+              :href="
+                '/objects/' + currentJsonObject.id
+              "
+              >Obejct edit</a
+            >
+          </h5>
         </tr>
       </div>
 
@@ -176,7 +200,6 @@ export default {
       boxCheckedIndex: -1,
 
       boxCheckedObjects: [],
-      // Here saved the checked Books
     };
   },
   methods: {
@@ -186,7 +209,6 @@ export default {
           this.jsonObjects = result;
         }
       );
-
       /* same to above
       .then(response => {
         this.books = response.data.books;
@@ -199,11 +221,7 @@ export default {
       this.currentJsonObject = jsonObject;
       this.currentIndex = index;
     },
-    /* setBoxCheckedJsonObject(jsonObject, index) {
-      this.boxCheckedObject = jsonObject;
-      this.boxCheckedIndex = index;
-    },
- */
+
     refreshList() {
       this.retrieveGenericRessource();
       this.currentObject = null;
@@ -261,9 +279,8 @@ export default {
   margin: auto;
 }
 th {
-  border-left: 1px solid #dddddd;
   text-align: left;
-  padding: 5px;
+  padding: 1px;
 }
 td {
   padding-right: 15px;

@@ -15,14 +15,16 @@ class GenericRESTDataService {
   async findById(id) {
     //TODO:  maket the function "Search by ID" work.
     const response = await http.get(
-      `/books/${id}`
+      '/' + config.RessourceName + `/${id}`
+      /* `/books/${id}` */
     );
-    //const response = await http.get('/books/1');
 
     /* return response.data */
     /* console.log(response.data.book[config.attrbiutes.variable_0]);
       console.log(response.data.book[config.attrbiutes.variable_1]);*/
-    console.log(response.data.book);
+    console.log(
+      response.data.config.RessourceName
+    );
     const attrs = config.attrbiutes;
     /* const mapped = {};
     const obj = response.data.book;
@@ -35,23 +37,17 @@ class GenericRESTDataService {
     }); */
 
     const mapped = {};
-    Object.entries(response.data.book).forEach(
-      ([key, value]) => {
-        if (attrs.includes(key)) {
-          mapped[key] = value;
-        }
+    Object.entries(
+      response.data.config.RessourceName
+    ).forEach(([key, value]) => {
+      if (attrs.includes(key)) {
+        mapped[key] = value;
       }
-    );
+    });
     return [mapped];
   }
 
   create(data) {
-    /* data[config.attribiutesTest.variable_1] = data.variable_1;
-    data[config.attribiutesTest.variable_2] = data.variable_2;
-    data[config.attribiutesTest.variable_3] = data.variable_3;
-    data[config.attribiutesTest.variable_4] = data.variable_4;
-    data[config.attribiutesTest.variable_5] = data.variable_5; */
-
     return http
       .post('/' + config.RessourceName, data)
       .then(result => {
@@ -61,19 +57,25 @@ class GenericRESTDataService {
   }
 
   async get(id) {
-    return http.get(`/books/${id}`);
+    return http.get(
+      '/' + config.RessourceName + `/${id}`
+    );
+    /* return http.get(`/books/${id}`); */
   }
 
   update(id, data) {
-    return http.put(`/books/${id}`, data);
+    return http.put(
+      '/' + config.RessourceName + `/${id}`,
+      data
+    );
+    /* return http.put(`/books/${id}`, data); */
   }
 
   delete(id) {
-    return http.delete(`/books/${id}`);
-  }
-
-  deleteAll() {
-    return http.delete(`/books`);
+    return http.delete(
+      '/' + config.RessourceName + `/${id}`
+    );
+    /* return http.delete(`/books/${id}`); */
   }
 }
 

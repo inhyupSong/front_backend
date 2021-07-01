@@ -6,10 +6,15 @@
         v-for="(obj, i) in objects"
         v-bind:key="i"
       >
-        <h4>
-          Object {{ i
+        <h4
+          v-bind:style="{
+            textAlign: 'left',
+            paddingLeft: '4em',
+          }"
+        >
+          Selected {{ i + 1
           }}<span v-if="isDisabled[i]">
-            (deleted)</span
+            (Deleted)</span
           >
         </h4>
         <table>
@@ -24,7 +29,9 @@
               }"
             >
               <label
-                ><strong>{{ key }}</strong></label
+                ><strong>{{
+                  key | capitalize
+                }}</strong></label
               >
             </td>
             <td>
@@ -32,7 +39,9 @@
                 type="text"
                 v-model="obj[key]"
                 :disabled="
-                  key === 'id' || isDisabled[i]
+                  key === 'id' ||
+                    isDisabled[i] ||
+                    isDisabled[Math.abs(i - 1)]
                 "
                 @change="updateObject(i)"
               />
@@ -51,6 +60,9 @@
           v-if="!isDisabled[i]"
           :disabled="isDisabled[Math.abs(i - 1)]"
         >
+          <!-- 
+            v-if="!isDisabled[i]"
+            :disabled="isDisabled[Math.abs(i - 1)]" -->
           {{
             isDisabled[Math.abs(i - 1)]
               ? 'KEPT'
@@ -59,6 +71,14 @@
         </button>
       </div>
     </div>
+    <router-link
+      :style="{ margin: '2em' }"
+      tag="button"
+      class="btn btn-secondary"
+      to="/objects"
+    >
+      Back to List
+    </router-link>
   </div>
 </template>
 
@@ -68,6 +88,16 @@ import config from '../config';
 import Vue from 'vue';
 
 export default {
+  /* filters: {
+    capitalize: function(value) {
+      if (!value) return '';
+      value = value.toString();
+      return (
+        value.charAt(0).toUpperCase() +
+        value.slice(1)
+      );
+    },
+  }, */
   props: ['boxCheckedObjects'],
   name: 'boxCheckedObject',
   data() {
@@ -115,7 +145,9 @@ export default {
 
     deleteObject(i) {
       if (
-        confirm('Do you really want to delete?')
+        confirm(
+          'Attention! \nDo you really want to delete? \nThis Object will be deleted permanently.'
+        )
       ) {
         GenericRESTDataService.delete(
           this.objects[i].id
